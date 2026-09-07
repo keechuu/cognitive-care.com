@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cognitive Care - Home Dashboard</title>
+  <!-- Google Fonts: Merriweather for serif headings, Plus Jakarta Sans for UI -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Merriweather', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              navy: '#062146',
+              navyHover: '#0A2D5C',
+              mint: '#80EEDF',
+              mintHover: '#6DE2D2',
+              mintDark: '#094F48',
+              canvas: '#FAF9F6',
+              sidebar: '#F8F9FA',
+              cardBg: '#FFFFFF',
+              borderLight: '#ECEEF1',
+              danger: '#BE123C',
+              dangerHover: '#9F1239',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="font-sans bg-brand-canvas text-slate-800 antialiased h-screen overflow-hidden flex">
+
+  <!-- Mobile Sidebar Overlay Backdrop -->
+  <div id="sidebar-backdrop" class="fixed inset-0 bg-slate-900/30 backdrop-blur-sm z-30 hidden lg:hidden"></div>
+
+  <!-- Left Navigation Sidebar -->
+  <aside id="sidebar" class="w-64 bg-brand-sidebar border-r border-brand-borderLight flex flex-col justify-between p-6 z-40 fixed lg:static inset-y-0 -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
+    <div>
+      <!-- Brand Logo / Title -->
+      <div class="flex items-center justify-between pb-8">
+        <a href="home.html" class="font-serif text-2xl font-bold text-slate-900 tracking-tight cursor-pointer">
+          Cognitive Care
+        </a>
+        <button id="close-sidebar-btn" class="lg:hidden text-slate-400 hover:text-slate-600 p-1" aria-label="Close sidebar">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Navigation Menu Items -->
+      <nav class="space-y-1.5" aria-label="Main Navigation">
+        <a href="home.html" class="nav-item active flex items-center gap-3.5 px-4 py-3 rounded-xl font-medium transition-all" data-nav="Home">
+          <i data-lucide="layout-grid" class="w-5 h-5"></i>
+          <span>Home</span>
+        </a>
+
+        <a href="games.html" class="nav-item flex items-center gap-3.5 px-4 py-3 rounded-xl font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 transition-all" data-nav="Games">
+          <i data-lucide="gamepad-2" class="w-5 h-5 stroke-[1.75]"></i>
+          <span>Games</span>
+        </a>
+
+        <a href="progress.html" class="nav-item flex items-center gap-3.5 px-4 py-3 rounded-xl font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 transition-all" data-nav="Progress">
+          <i data-lucide="trending-up" class="w-5 h-5 stroke-[1.75]"></i>
+          <span>Progress</span>
+        </a>
+
+        <a href="#" onclick="alert('Reports section coming soon!')" class="nav-item flex items-center gap-3.5 px-4 py-3 rounded-xl font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 transition-all" data-nav="Reports">
+          <i data-lucide="file-text" class="w-5 h-5 stroke-[1.75]"></i>
+          <span>Reports</span>
+        </a>
+
+        <a href="#" onclick="alert('Alerts panel: No new urgent alerts.')" class="nav-item flex items-center gap-3.5 px-4 py-3 rounded-xl font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 transition-all" data-nav="Alerts">
+          <i data-lucide="bell" class="w-5 h-5 stroke-[1.75]"></i>
+          <span>Alerts</span>
+        </a>
+
+        <a href="#" onclick="alert('Reminders active for today.')" class="nav-item flex items-center gap-3.5 px-4 py-3 rounded-xl font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 transition-all" data-nav="Reminders">
+          <i data-lucide="timer" class="w-5 h-5 stroke-[1.75]"></i>
+          <span>Reminders</span>
+        </a>
+
+        <a href="#" class="nav-item flex items-center gap-3.5 px-4 py-3 rounded-xl font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 transition-all" data-nav="Profile">
+          <i data-lucide="circle-user-round" class="w-5 h-5 stroke-[1.75]"></i>
+          <span>Profile</span>
+        </a>
+
+        <a href="#" class="nav-item flex items-center gap-3.5 px-4 py-3 rounded-xl font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 transition-all" data-nav="Settings">
+          <i data-lucide="settings" class="w-5 h-5 stroke-[1.75]"></i>
+          <span>Settings</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Sidebar footer note -->
+    <div class="text-xs text-slate-400 text-center pt-4 border-t border-slate-200/60">
+      v1.0 • Care Platform
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="flex-1 flex flex-col h-screen overflow-y-auto bg-brand-canvas pb-12">
+    
+    <!-- Top Bar -->
+    <header class="w-full flex items-center justify-between px-6 sm:px-10 py-5 bg-brand-canvas sticky top-0 z-20">
+      <div class="flex items-center gap-3 flex-wrap">
+        <!-- Mobile Sidebar Toggle -->
+        <button id="open-sidebar-btn" class="lg:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100" aria-label="Open menu">
+          <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+
+        <!-- Mode Badge Switcher -->
+        <div class="flex items-center gap-2 bg-brand-mint/90 text-brand-mintDark px-4 py-2 rounded-full font-medium text-sm shadow-sm">
+          <i data-lucide="arrow-left-right" class="w-4 h-4 stroke-[2.2]"></i>
+          <span>Mode: Patient</span>
+        </div>
+
+        <!-- Date & Time Badge -->
+        <div class="hidden sm:flex items-center gap-4 bg-white border border-slate-200/80 px-4 py-2 rounded-xl text-sm font-medium text-slate-700 shadow-xs">
+          <div class="flex items-center gap-2">
+            <i data-lucide="calendar" class="w-4 h-4 text-slate-600"></i>
+            <span id="current-date">Thursday, October 24</span>
+          </div>
+          <span class="text-slate-300">•</span>
+          <div class="flex items-center gap-2">
+            <i data-lucide="clock" class="w-4 h-4 text-slate-600"></i>
+            <span id="current-time">10:30 AM</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top Right Action Icons -->
+      <div class="flex items-center gap-3">
+        <button class="w-10 h-10 rounded-full bg-slate-200/70 hover:bg-slate-200 flex items-center justify-center text-slate-700 transition-colors" aria-label="Notifications" title="Notifications">
+          <i data-lucide="bell" class="w-5 h-5 stroke-[1.75]"></i>
+        </button>
+
+        <button class="w-10 h-10 rounded-full bg-brand-navy hover:bg-brand-navyHover flex items-center justify-center text-white transition-colors shadow-sm" aria-label="Account Profile" title="User Profile">
+          <i data-lucide="user" class="w-5 h-5 stroke-[1.75]"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Dashboard Content Container -->
+    <div class="px-6 sm:px-10 max-w-7xl mx-auto w-full space-y-6">
+
+      <!-- Welcome Banner Card -->
+      <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+        <div class="flex items-center gap-4">
+          <!-- Stylized Hand/Companion Icon -->
+          <div class="w-14 h-14 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-700 shrink-0">
+            <i data-lucide="hand" class="w-7 h-7 stroke-[2]"></i>
+          </div>
+          <div>
+            <p class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">
+              Your Cognitive Wellness Companion
+            </p>
+            <h2 class="font-serif text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+              Welcome to Cognitive Care
+            </h2>
+          </div>
+        </div>
+
+        <!-- Caregiver Portal Link/Button -->
+        <a href="index.html" class="flex items-center gap-3 bg-slate-50 hover:bg-slate-100 border border-slate-200/90 px-4 py-3 rounded-2xl transition-all shadow-xs group" title="Return to Caregiver Portal login">
+          <div class="w-8 h-8 rounded-xl bg-blue-100 flex items-center justify-center text-blue-700">
+            <i data-lucide="shield-check" class="w-4 h-4"></i>
+          </div>
+          <div class="text-left">
+            <div class="text-xs font-bold text-slate-900">Caregiver Portal</div>
+            <div class="text-[11px] text-slate-500">Switch or log in</div>
+          </div>
+          <i data-lucide="arrow-right" class="w-4 h-4 text-slate-400 group-hover:translate-x-0.5 transition-transform ml-1"></i>
+        </a>
+      </div>
+
+      <!-- Emergency & Primary Caregiver Banner -->
+      <div class="bg-rose-50/60 border border-rose-200/70 rounded-3xl p-5 sm:p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-5 shadow-xs">
+        <div class="flex items-center gap-4">
+          <!-- Add Photo Box -->
+          <div class="w-16 h-16 rounded-2xl bg-white border-2 border-dashed border-rose-300 flex flex-col items-center justify-center text-slate-400 hover:text-slate-600 cursor-pointer shadow-xs" title="Add caregiver photo">
+            <i data-lucide="camera" class="w-5 h-5 text-slate-400 mb-0.5"></i>
+            <span class="text-[10px] font-medium text-slate-500">Add Photo</span>
+          </div>
+
+          <div>
+            <div class="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-rose-800 mb-1">
+              <span class="text-rose-600 font-black">✱</span>
+              <span>Emergency & Primary Caregiver</span>
+            </div>
+            <div class="flex flex-wrap items-baseline gap-2">
+              <span class="text-2xl font-bold text-slate-900 tracking-tight font-sans">(555) 234-5678</span>
+              <span class="text-slate-400">•</span>
+              <span class="text-sm text-slate-600 font-medium">Dr. Sarah Vance (Family Contact)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Call Button -->
+        <a href="tel:5552345678" onclick="alert('Calling Caregiver: Dr. Sarah Vance at (555) 234-5678...')" class="bg-brand-danger hover:bg-brand-dangerHover text-white px-7 py-3.5 rounded-2xl font-semibold text-sm flex items-center justify-center gap-2.5 transition-all shadow-md active:scale-95 shrink-0">
+          <i data-lucide="phone-call" class="w-4 h-4"></i>
+          <span>Call Caregiver Now</span>
+        </a>
+      </div>
+
+      <!-- Two-Column Section: Daily Routines & Medication Schedule -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+        <!-- 1. Daily Routines Card -->
+        <div class="bg-white rounded-3xl p-6 sm:p-7 border border-slate-100 shadow-sm space-y-4">
+          <div class="flex items-center justify-between pb-2">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-teal-100/70 text-teal-700 flex items-center justify-center">
+                <i data-lucide="check-circle" class="w-5 h-5 stroke-[2]"></i>
+              </div>
+              <div>
+                <h3 class="font-bold text-slate-900 text-lg">Daily Routines</h3>
+                <p class="text-xs text-slate-500">Stay healthy and active today</p>
+              </div>
+            </div>
+            <span id="routine-count" class="text-xs font-bold bg-teal-100 text-teal-800 px-3 py-1.5 rounded-full">
+              2 of 3 Done
+            </span>
+          </div>
+
+          <!-- Routine Item 1: Morning Walk -->
+          <div class="flex items-center justify-between p-4 rounded-2xl bg-slate-50 border border-slate-100">
+            <div class="flex items-center gap-3.5">
+              <div class="w-8 h-8 rounded-full bg-teal-700 text-white flex items-center justify-center">
+                <i data-lucide="check" class="w-4 h-4 stroke-[3]"></i>
+              </div>
+              <div>
+                <div class="font-bold text-slate-800 text-sm">Morning Walk</div>
+                <div class="text-xs text-slate-500">8:00 AM • Completed (15 mins)</div>
+              </div>
+            </div>
+            <i data-lucide="check-circle-2" class="w-5 h-5 text-teal-700"></i>
+          </div>
+
+          <!-- Routine Item 2: Healthy Breakfast -->
+          <div class="flex items-center justify-between p-4 rounded-2xl bg-slate-50 border border-slate-100">
+            <div class="flex items-center gap-3.5">
+              <div class="w-8 h-8 rounded-full bg-teal-700 text-white flex items-center justify-center">
+                <i data-lucide="check" class="w-4 h-4 stroke-[3]"></i>
+              </div>
+              <div>
+                <div class="font-bold text-slate-800 text-sm">Healthy Breakfast</div>
+                <div class="text-xs text-slate-500">8:30 AM • Completed with Oatmeal & Fruit</div>
+              </div>
+            </div>
+            <i data-lucide="check-circle-2" class="w-5 h-5 text-teal-700"></i>
+          </div>
+
+          <!-- Routine Item 3: Afternoon Rest -->
+          <div id="routine-rest-box" class="flex items-center justify-between p-4 rounded-2xl bg-slate-50 border border-slate-100">
+            <div class="flex items-center gap-3.5">
+              <div id="routine-rest-icon" class="w-8 h-8 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center">
+                <i data-lucide="clock" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <div class="font-bold text-slate-800 text-sm">Afternoon Rest</div>
+                <div id="routine-rest-subtitle" class="text-xs text-slate-500">2:00 PM • Upcoming relaxing quiet time</div>
+              </div>
+            </div>
+            <button id="mark-done-btn" onclick="markRoutineDone()" class="bg-brand-navy hover:bg-brand-navyHover text-white px-4 py-2 rounded-xl text-xs font-semibold shadow-sm transition-all active:scale-95">
+              Mark Done
+            </button>
+          </div>
+        </div>
+
+        <!-- 2. Medication Schedule Card -->
+        <div class="bg-white rounded-3xl p-6 sm:p-7 border border-slate-100 shadow-sm space-y-4">
+          <div class="flex items-center justify-between pb-2">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-rose-100/70 text-rose-700 flex items-center justify-center">
+                <i data-lucide="pill" class="w-5 h-5 stroke-[2]"></i>
+              </div>
+              <div>
+                <h3 class="font-bold text-slate-900 text-lg">Medication Schedule</h3>
+                <p class="text-xs text-slate-500">Prescribed reminders & timings</p>
+              </div>
+            </div>
+            <span id="med-count" class="text-xs font-bold bg-rose-100 text-rose-800 px-3 py-1.5 rounded-full">
+              1 Pending
+            </span>
+          </div>
+
+          <!-- Med Item 1: Morning Pill -->
+          <div class="flex items-center justify-between p-4 rounded-2xl bg-slate-50 border border-slate-100">
+            <div class="flex items-center gap-3.5">
+              <div class="w-8 h-8 rounded-full bg-teal-700 text-white flex items-center justify-center">
+                <i data-lucide="check" class="w-4 h-4 stroke-[3]"></i>
+              </div>
+              <div>
+                <div class="font-bold text-slate-800 text-sm">Morning Pill (Donepezil)</div>
+                <div class="text-xs text-slate-500">1 Tablet (5mg) • 8:00 AM • Taken</div>
+              </div>
+            </div>
+            <i data-lucide="check-circle-2" class="w-5 h-5 text-teal-700"></i>
+          </div>
+
+          <!-- Med Item 2: Afternoon Vitamin & Omega-3 -->
+          <div id="med-omega-box" class="flex items-center justify-between p-4 rounded-2xl bg-slate-50 border border-slate-100">
+            <div class="flex items-center gap-3.5">
+              <div id="med-omega-icon" class="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center">
+                <i data-lucide="flask-conical" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <div class="font-bold text-slate-800 text-sm">Afternoon Vitamin & Omega-3</div>
+                <div id="med-omega-subtitle" class="text-xs text-slate-500">2 Capsules • 1:00 PM • Due Now</div>
+              </div>
+            </div>
+            <button id="take-med-btn" onclick="takeMedication()" class="bg-brand-navy hover:bg-brand-navyHover text-white px-5 py-2 rounded-xl text-xs font-semibold shadow-sm transition-all active:scale-95">
+              Take Now
+            </button>
+          </div>
+
+          <!-- Med Item 3: Evening Medication -->
+          <div class="flex items-center justify-between p-4 rounded-2xl bg-slate-50 border border-slate-100">
+            <div class="flex items-center gap-3.5">
+              <div class="w-8 h-8 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center">
+                <i data-lucide="clock" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <div class="font-bold text-slate-800 text-sm">Evening Medication (Memantine)</div>
+                <div class="text-xs text-slate-500">1 Tablet (10mg) • 8:00 PM</div>
+              </div>
+            </div>
+            <span class="text-xs font-semibold text-slate-400 bg-slate-100 px-3 py-1 rounded-lg">Upcoming</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Quick Actions Section -->
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-sm">
+        <div class="mb-6">
+          <h3 class="font-serif text-xl font-bold text-slate-900">Quick Actions</h3>
+          <p class="text-xs text-slate-500">Touch any card to navigate quickly</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+          
+          <!-- Card 1: Play Games -->
+          <a href="games.html" class="flex flex-col items-center justify-center p-7 rounded-2xl bg-slate-50 hover:bg-slate-100/90 border border-slate-100 transition-all hover:-translate-y-1 hover:shadow-md text-center group cursor-pointer">
+            <div class="w-16 h-16 rounded-2xl bg-brand-navy text-white flex items-center justify-center mb-3 shadow-md group-hover:scale-105 transition-transform">
+              <i data-lucide="gamepad-2" class="w-8 h-8"></i>
+            </div>
+            <div class="font-bold text-slate-900 text-base">Play Games</div>
+            <div class="text-xs text-slate-500 mt-1">Mind & Memory fun</div>
+          </a>
+
+          <!-- Card 2: Set Reminders -->
+          <div onclick="alert('Alarms & custom notes modal')" class="flex flex-col items-center justify-center p-7 rounded-2xl bg-slate-50 hover:bg-slate-100/90 border border-slate-100 transition-all hover:-translate-y-1 hover:shadow-md text-center group cursor-pointer">
+            <div class="w-16 h-16 rounded-2xl bg-amber-800 text-white flex items-center justify-center mb-3 shadow-md group-hover:scale-105 transition-transform">
+              <i data-lucide="timer" class="w-8 h-8"></i>
+            </div>
+            <div class="font-bold text-slate-900 text-base">Set Reminders</div>
+            <div class="text-xs text-slate-500 mt-1">Alarms & custom notes</div>
+          </div>
+
+          <!-- Card 3: Caregiver Connect -->
+          <div onclick="alert('Starting Caregiver Video / Voice Connect...')" class="flex flex-col items-center justify-center p-7 rounded-2xl bg-slate-50 hover:bg-slate-100/90 border border-slate-100 transition-all hover:-translate-y-1 hover:shadow-md text-center group cursor-pointer">
+            <div class="w-16 h-16 rounded-2xl bg-teal-800 text-white flex items-center justify-center mb-3 shadow-md group-hover:scale-105 transition-transform">
+              <i data-lucide="heart-handshake" class="w-8 h-8"></i>
+            </div>
+            <div class="font-bold text-slate-900 text-base">Caregiver Connect</div>
+            <div class="text-xs text-slate-500 mt-1">Message or video call</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+  <script>
+    function markRoutineDone() {
+      const box = document.getElementById('routine-rest-box');
+      const icon = document.getElementById('routine-rest-icon');
+      const btn = document.getElementById('mark-done-btn');
+      const count = document.getElementById('routine-count');
+      const subtitle = document.getElementById('routine-rest-subtitle');
+
+      icon.className = 'w-8 h-8 rounded-full bg-teal-700 text-white flex items-center justify-center';
+      icon.innerHTML = '<i data-lucide="check" class="w-4 h-4 stroke-[3]"></i>';
+      subtitle.textContent = 'Completed (Resting time)';
+      count.textContent = '3 of 3 Done';
+      count.className = 'text-xs font-bold bg-emerald-100 text-emerald-800 px-3 py-1.5 rounded-full';
+
+      btn.outerHTML = '<i data-lucide="check-circle-2" class="w-5 h-5 text-teal-700"></i>';
+      if (window.lucide) window.lucide.createIcons();
+      speak('Great job! Afternoon rest is marked as done.');
+    }
+
+    function takeMedication() {
+      const icon = document.getElementById('med-omega-icon');
+      const btn = document.getElementById('take-med-btn');
+      const count = document.getElementById('med-count');
+      const subtitle = document.getElementById('med-omega-subtitle');
+
+      icon.className = 'w-8 h-8 rounded-full bg-teal-700 text-white flex items-center justify-center';
+      icon.innerHTML = '<i data-lucide="check" class="w-4 h-4 stroke-[3]"></i>';
+      subtitle.textContent = '2 Capsules • Taken just now';
+      count.textContent = 'All Completed';
+      count.className = 'text-xs font-bold bg-emerald-100 text-emerald-800 px-3 py-1.5 rounded-full';
+
+      btn.outerHTML = '<i data-lucide="check-circle-2" class="w-5 h-5 text-teal-700"></i>';
+      if (window.lucide) window.lucide.createIcons();
+      speak('Medication confirmed taken.');
+    }
+  </script>
+</body>
+</html>
