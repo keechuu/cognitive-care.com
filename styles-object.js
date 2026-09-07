@@ -1,7 +1,21 @@
-// Cognitive Care Portal - CSS-in-JS Object Format
-// Use this with React (styled-components, CSS Modules), Vue (scoped styles), or other frameworks
+// Cognitive Care Portal - Google Apps Script Compatible Styles
+// No ES6 export/import - compatible with Google Apps Script
 
-export const PortalStyles = {
+// Color palette
+const Colors = {
+  darkBlue: '#062146',
+  teal: '#80EEDF',
+  darkTeal: '#094F48',
+  lightGray: '#F1F3F5',
+  white: '#ffffff',
+  borderGray: '#E2E8F0',
+  darkBorderGray: '#CBD5E1',
+  darkGrayText: '#333',
+  mediumGrayText: '#666',
+};
+
+// Portal Styles Object
+const PortalStyles = {
   // Navigation styles
   navItem: {
     padding: '12px 16px',
@@ -72,7 +86,7 @@ export const PortalStyles = {
     color: '#094F48',
   },
 
-  // Scrollbar styles (for custom scrollbar appearance)
+  // Scrollbar styles
   scrollbar: {
     width: '6px',
     height: '6px',
@@ -88,121 +102,193 @@ export const PortalStyles = {
   },
 };
 
-// Color palette - can be used globally
-export const Colors = {
-  darkBlue: '#062146',
-  teal: '#80EEDF',
-  darkTeal: '#094F48',
-  lightGray: '#F1F3F5',
-  white: '#ffffff',
-  borderGray: '#E2E8F0',
-  darkBorderGray: '#CBD5E1',
-  darkGrayText: '#333',
-  mediumGrayText: '#666',
-};
-
-// Animations
-export const Animations = {
-  speakPulse: `
-    @keyframes speak-pulse {
-      0%, 100% {
-        transform: scale(1);
-        opacity: 1;
-      }
-      50% {
-        transform: scale(1.02);
-        opacity: 0.8;
-      }
+// Animations CSS String
+const Animations = `
+  @keyframes speak-pulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 1;
     }
-  `,
-};
+    50% {
+      transform: scale(1.02);
+      opacity: 0.8;
+    }
+  }
+`;
 
-// Utility functions for React/Vue
-export const usePortalStyles = () => {
+// CSS String for all portal styles
+const PortalStylesCSS = `
+  /* Active Sidebar Navigation Item */
+  .nav-item.active {
+    background-color: #062146 !important;
+    color: #ffffff !important;
+  }
+
+  .nav-item.active i {
+    stroke: #ffffff !important;
+  }
+
+  /* Input Box Focus and Styling */
+  .input-box {
+    background-color: #F1F3F5;
+    border: 1.5px solid transparent;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .input-box:focus-within {
+    background-color: #ffffff;
+    border-color: #80EEDF;
+    box-shadow: 0 0 0 4px rgba(128, 238, 223, 0.25);
+  }
+
+  /* Card Elevation Shadow */
+  .login-card {
+    box-shadow: 0 25px 50px -12px rgba(6, 33, 70, 0.09), 0 4px 20px -2px rgba(0, 0, 0, 0.04);
+  }
+
+  /* Audio guidance speakable hover indicators */
+  .audio-speakable {
+    transition: color 0.15s ease;
+    user-select: none;
+  }
+
+  .audio-speakable:hover {
+    color: #094F48;
+  }
+
+  .audio-speaking {
+    animation: speak-pulse 1.2s infinite ease-in-out;
+    color: #094F48 !important;
+  }
+
+  @keyframes speak-pulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.02);
+      opacity: 0.8;
+    }
+  }
+
+  /* Custom Scrollbar for responsiveness */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #E2E8F0;
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #CBD5E1;
+  }
+`;
+
+// Utility function to get style as object
+function getStyleObject(styleName) {
+  if (PortalStyles[styleName]) {
+    return PortalStyles[styleName];
+  }
+  return null;
+}
+
+// Utility function to get color
+function getColor(colorName) {
+  if (Colors[colorName]) {
+    return Colors[colorName];
+  }
+  return null;
+}
+
+// Function to inject CSS into HTML
+function injectPortalStyles(html) {
+  const styleTag = '<style>' + PortalStylesCSS + '</style>';
+  return styleTag + html;
+}
+
+// Function to get combined style string for inline styles
+function getInlineStyle(styleObject) {
+  return Object.entries(styleObject)
+    .map(([key, value]) => {
+      // Convert camelCase to kebab-case
+      const cssProperty = key.replace(/([A-Z])/g, '-$1').toLowerCase();
+      return cssProperty + ': ' + value;
+    })
+    .join('; ');
+}
+
+// Example usage functions for Google Apps Script
+
+/**
+ * Apply portal styles to an HTML document
+ * @param {string} html - HTML content
+ * @return {string} HTML with portal styles injected
+ */
+function applyPortalStyles(html) {
+  return injectPortalStyles(html);
+}
+
+/**
+ * Get active navigation item styles
+ * @return {Object} Style object
+ */
+function getActiveNavStyles() {
   return {
-    getNavItemClasses: (isActive) => {
-      const baseClass = PortalStyles.navItem;
-      return isActive ? { ...baseClass, ...PortalStyles.navItemActive } : baseClass;
-    },
-
-    getInputClasses: (isFocused) => {
-      const baseClass = PortalStyles.inputBox;
-      return isFocused ? { ...baseClass, ...PortalStyles.inputBoxFocus } : baseClass;
-    },
-
-    getAudioClasses: (isHovered, isSpeaking) => {
-      let classes = PortalStyles.audioSpeakable;
-      if (isHovered) classes = { ...classes, ...PortalStyles.audioSpeakableHover };
-      if (isSpeaking) classes = { ...classes, ...PortalStyles.audioSpeaking };
-      return classes;
-    },
+    ...PortalStyles.navItem,
+    ...PortalStyles.navItemActive
   };
-};
-
-// Example usage with React (styled-components):
-/*
-import styled from 'styled-components';
-import { PortalStyles, Colors, Animations } from './styles-object';
-
-const NavItem = styled.div`
-  ${Object.entries(PortalStyles.navItem)
-    .map(([key, value]) => `${key}: ${value};`)
-    .join('\n')}
-  
-  &.active {
-    ${Object.entries(PortalStyles.navItemActive)
-      .map(([key, value]) => `${key}: ${value};`)
-      .join('\n')}
-  }
-`;
-
-const InputBox = styled.input`
-  ${Object.entries(PortalStyles.inputBox)
-    .map(([key, value]) => `${key}: ${value};`)
-    .join('\n')}
-  
-  &:focus {
-    ${Object.entries(PortalStyles.inputBoxFocus)
-      .map(([key, value]) => `${key}: ${value};`)
-      .join('\n')}
-  }
-`;
-*/
-
-// Example usage with Vue (scoped styles):
-/*
-<style scoped>
-.nav-item {
-  padding: 12px 16px;
-  margin-bottom: 8px;
-  border-radius: 8px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: #333;
-  transition: all 0.2s ease;
 }
 
-.nav-item.active {
-  background-color: #062146;
-  color: #ffffff;
+/**
+ * Get focused input box styles
+ * @return {Object} Style object
+ */
+function getFocusedInputStyles() {
+  return {
+    ...PortalStyles.inputBox,
+    ...PortalStyles.inputBoxFocus
+  };
 }
 
-.input-box {
-  background-color: #F1F3F5;
-  border: 1.5px solid transparent;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  padding: 12px 16px;
-  border-radius: 8px;
+/**
+ * Get card with shadow styles
+ * @return {Object} Style object
+ */
+function getCardStyles() {
+  return PortalStyles.loginCard;
 }
 
-.input-box:focus {
-  background-color: #ffffff;
-  border-color: #80EEDF;
-  box-shadow: 0 0 0 4px rgba(128, 238, 223, 0.25);
+/**
+ * Get audio speakable hover styles
+ * @return {Object} Style object
+ */
+function getAudioHoverStyles() {
+  return {
+    ...PortalStyles.audioSpeakable,
+    ...PortalStyles.audioSpeakableHover
+  };
 }
-</style>
-*/
 
-export default PortalStyles;
+/**
+ * Get audio speaking animation styles
+ * @return {Object} Style object
+ */
+function getAudioSpeakingStyles() {
+  return {
+    ...PortalStyles.audioSpeakable,
+    ...PortalStyles.audioSpeaking
+  };
+}
+
+// Logger function for debugging in Google Apps Script
+function logPortalStyles() {
+  Logger.log('=== Portal Styles ===');
+  Logger.log('Colors: ' + JSON.stringify(Colors, null, 2));
+  Logger.log('Portal Styles: ' + JSON.stringify(PortalStyles, null, 2));
+  Logger.log('CSS String length: ' + PortalStylesCSS.length + ' characters');
+}
