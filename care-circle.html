@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cognitive Care - Care Circle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={theme:{extend:{fontFamily:{serif:['Merriweather','Georgia','serif'],sans:['"Plus Jakarta Sans"','system-ui','sans-serif']},colors:{brand:{navy:'#062146',mint:'#80EEDF'}}}}}</script>
+<script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-[#FAF9F6] text-slate-800 font-sans min-h-screen">
+<header class="bg-white/95 backdrop-blur border-b border-slate-100 sticky top-0 z-20"><div class="max-w-6xl mx-auto px-5 py-4 flex items-center justify-between">
+<a href="home.html" class="flex items-center gap-2 font-serif font-bold text-xl text-[#062146]"><img src="assets/cognitive-care-logo.png" alt="Cognitive Care" class="w-9 h-9 rounded-lg object-cover bg-black"> <span>Cognitive Care</span></a><a href="profile.html" class="text-sm font-semibold text-slate-600 hover:text-[#062146]">My Profile</a></div></header>
+<main class="max-w-6xl mx-auto px-5 py-8 sm:py-12">
+<div class="max-w-3xl mb-8"><p class="text-xs font-bold uppercase tracking-wider text-violet-600 mb-2">Care Circles</p><h1 class="font-serif text-3xl sm:text-4xl font-bold text-slate-900">Find your people through shared interests.</h1><p class="text-slate-500 mt-3">A gentle social space built around hobbies, memories and meaningful activities — not endless scrolling.</p></div>
+<section class="grid lg:grid-cols-3 gap-6">
+<div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm lg:col-span-1"><div class="flex items-center gap-3 mb-5"><div class="w-11 h-11 rounded-2xl bg-violet-100 text-violet-700 flex items-center justify-center"><i data-lucide="sparkles"></i></div><div><h2 class="font-serif font-bold text-lg">Your interests</h2><p class="text-xs text-slate-500">Pick what you enjoy.</p></div></div><div id="interests" class="flex flex-wrap gap-2"></div><a href="profile.html" class="block text-center mt-5 px-4 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-sm font-semibold">Edit interests</a></div>
+<div class="lg:col-span-2 space-y-6"><div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm"><div class="flex items-center justify-between gap-3 mb-5"><div><p class="text-xs font-bold uppercase tracking-wider text-violet-600">For you</p><h2 class="font-serif font-bold text-xl">People you may connect with</h2></div><span id="match-count" class="text-xs font-bold bg-violet-50 text-violet-700 px-3 py-1.5 rounded-full"></span></div><div id="matches" class="space-y-3"></div></div>
+<div id="circle" class="hidden bg-gradient-to-br from-violet-50 to-white rounded-3xl p-6 border border-violet-100 shadow-sm"><div class="flex items-center justify-between"><div><p class="text-xs font-bold uppercase tracking-wider text-violet-600">Your circle</p><h2 id="circle-title" class="font-serif font-bold text-xl">Care Circle</h2></div><span class="text-xs font-bold bg-white border border-violet-100 px-3 py-1.5 rounded-full">Private demo</span></div><p id="circle-copy" class="text-sm text-slate-600 mt-3"></p><div class="mt-5 p-4 rounded-2xl bg-white border border-violet-100"><p class="text-xs font-bold text-violet-700">Today's gentle prompt</p><p id="prompt" class="font-semibold text-slate-800 mt-1">What is a hobby that always makes you smile?</p></div></div></div>
+</section></main>
+<script>
+const PEOPLE=[
+{name:'Ravi',emoji:'🧑',interests:['Gardening','Books','Puzzles'],prompt:'What plant reminds you of home?'},
+{name:'Maya',emoji:'👩',interests:['Music','Gardening','Art'],prompt:'Which song brings back a happy memory?'},
+{name:'Thomas',emoji:'🧓',interests:['Books','Chess','Music'],prompt:'What story would you recommend to a friend?'},
+{name:'Meera',emoji:'👩‍🦳',interests:['Cooking','Walking','Music'],prompt:'What recipe has a special memory attached to it?'},
+{name:'Arjun',emoji:'👨',interests:['Puzzles','Chess','Art'],prompt:'What puzzle or game do you enjoy most?'}
+];
+const KEY='cognitive_care_profile', CONNECT='cognitive_care_connections';
+function getProfile(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return {}}}
+function saveConnections(a){localStorage.setItem(CONNECT,JSON.stringify(a))}
+function getConnections(){try{return JSON.parse(localStorage.getItem(CONNECT)||'[]')}catch(e){return []}}
+function render(){const p=getProfile(), interests=p.interests||[]; document.getElementById('interests').innerHTML=interests.length?interests.map(i=>`<span class="px-3 py-1.5 rounded-full bg-violet-100 text-violet-800 text-xs font-bold">${i}</span>`).join(''):'<span class="text-sm text-slate-500">No interests selected yet. Add some to personalize your matches.</span>';
+const ranked=PEOPLE.map(x=>({...x,shared:x.interests.filter(i=>interests.includes(i))})).sort((a,b)=>b.shared.length-a.shared.length); const list=ranked.filter(x=>x.shared.length>0); document.getElementById('match-count').textContent=`${list.length} matches`;
+const con=getConnections(); document.getElementById('matches').innerHTML=list.length?list.map((x,idx)=>{const score=Math.min(96,58+x.shared.length*13+Math.max(0,3-idx)*2);const connected=con.includes(x.name);return `<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100"><div class="flex items-center gap-3"><div class="w-12 h-12 rounded-2xl bg-white flex items-center justify-center text-2xl">${x.emoji}</div><div><div class="font-bold text-slate-900">${x.name}</div><div class="text-xs text-slate-500">${x.shared.join(' • ')}</div><div class="text-xs font-bold text-violet-700 mt-1">${score}% interest match</div></div></div><button onclick="connect('${x.name}')" class="px-4 py-2.5 rounded-xl text-xs font-bold ${connected?'bg-emerald-100 text-emerald-800':'bg-violet-700 text-white hover:bg-violet-800'}">${connected?'✓ Connected':'Connect'}</button></div>`}).join(''):'<div class="p-5 rounded-2xl bg-amber-50 border border-amber-100 text-sm text-amber-900">Choose a few interests in your profile and your personalized matches will appear here.</div>';
+if(con.length){const who=con[con.length-1];const person=PEOPLE.find(x=>x.name===who);document.getElementById('circle').classList.remove('hidden');document.getElementById('circle-title').textContent=`${person.interests[0]} Circle`;document.getElementById('circle-copy').textContent=`You connected with ${who}. You both enjoy ${person.interests.filter(i=>interests.includes(i)).join(' and ')}. Start with a gentle shared prompt.`;document.getElementById('prompt').textContent=person.prompt;}}
+function connect(name){const a=getConnections();if(!a.includes(name)){a.push(name);saveConnections(a);render();} }
+render();lucide.createIcons();
+</script></body></html>

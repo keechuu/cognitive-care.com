@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cognitive Care - Settings</title>
+  <!-- Google Fonts: Merriweather for serif headings, Plus Jakarta Sans for UI -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Merriweather', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              navy: '#062146',
+              navyHover: '#0A2D5C',
+              mint: '#80EEDF',
+              mintHover: '#6DE2D2',
+              mintDark: '#094F48',
+              canvas: '#FAF9F6',
+              sidebar: '#F8F9FA',
+              cardBg: '#FFFFFF',
+              borderLight: '#ECEEF1',
+              danger: '#BE123C',
+              dangerHover: '#9F1239',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+/* Custom Styling for Cognitive Care Portal */
+
+/* Active Sidebar Navigation Item */
+.nav-item.active {
+  background-color: #062146 !important;
+  color: #ffffff !important;
+}
+
+.nav-item.active i {
+  stroke: #ffffff !important;
+}
+
+/* Input Box Focus and Styling */
+.input-box {
+  background-color: #F1F3F5;
+  border: 1.5px solid transparent;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.input-box:focus-within {
+  background-color: #ffffff;
+  border-color: #80EEDF;
+  box-shadow: 0 0 0 4px rgba(128, 238, 223, 0.25);
+}
+
+/* Card Elevation Shadow */
+.login-card {
+  box-shadow: 0 25px 50px -12px rgba(6, 33, 70, 0.09), 0 4px 20px -2px rgba(0, 0, 0, 0.04);
+}
+
+/* Audio guidance speakable hover indicators */
+.audio-speakable {
+  transition: color 0.15s ease;
+  user-select: none;
+}
+
+.audio-speakable:hover {
+  color: #094F48;
+}
+
+.audio-speaking {
+  animation: speak-pulse 1.2s infinite ease-in-out;
+  color: #094F48 !important;
+}
+
+@keyframes speak-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.02);
+    opacity: 0.8;
+  }
+}
+
+/* Custom Scrollbar for responsiveness */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #E2E8F0;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #CBD5E1;
+}
+
+/* Settings Toggle Switch */
+.settings-toggle {
+  width: 48px;
+  height: 28px;
+  border-radius: 9999px;
+  background-color: #E2E8F0;
+  position: relative;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.settings-toggle[aria-checked="true"] {
+  background-color: #094F48;
+}
+.settings-toggle-knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  border-radius: 9999px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  transition: transform 0.2s ease;
+}
+.settings-toggle[aria-checked="true"] .settings-toggle-knob {
+  transform: translateX(20px);
+}
+</style>
+</head>
+<body class="font-sans bg-brand-canvas text-slate-800 antialiased h-screen overflow-hidden flex">
+
+  <!-- Mobile Sidebar Overlay Backdrop -->
+  <div id="sidebar-backdrop" class="fixed inset-0 bg-slate-900/30 backdrop-blur-sm z-30 hidden lg:hidden"></div>
+
+  <!-- Left Navigation Sidebar -->
+  <aside id="sidebar" class="w-64 bg-brand-sidebar border-r border-brand-borderLight flex flex-col justify-between p-6 z-40 fixed lg:static inset-y-0 -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
+    <div>
+      <!-- Brand Logo / Title -->
+      <div class="flex items-center justify-between pb-8">
+        <a href="home.html" class="flex items-center gap-3 font-serif font-bold text-slate-900 tracking-tight cursor-pointer min-w-0">
+          <img src="assets/cognitive-care-logo.png" alt="Cognitive Care" class="w-11 h-11 rounded-xl object-cover bg-black shadow-sm shrink-0">
+          <span class="leading-tight">Cognitive Care</span>
+        </a>
+        <button id="close-sidebar-btn" class="lg:hidden text-slate-400 hover:text-slate-600 p-1" aria-label="Close sidebar">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Navigation Menu Items -->
+      <nav class="space-y-1.5" aria-label="Main Navigation">
+        <a href="home.html" class="nav-item flex items-center gap-3.5 px-4 py-3 rounded-xl font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 transition-all" data-nav="Home">
+          <i data-lucide="layout-grid" class="w-5 h-5"></i>
+          <span>Home</span>
+        </a>
+
+        <a href="games.html" class="nav-item flex items-center gap-3.5 px-4 py-3 rounded-xl font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 transition-all" data-nav="Games">
+          <i data-lucide="gamepad-2" class="w-5 h-5 stroke-[1.75]"></i>
+          <span>Games</span>
+        </a>
+
+        <a href="album.html" class="nav-item flex items-center gap-3.5 px-4 py-3 rounded-xl font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 transition-all" data-nav="Memory Album">
+          <i data-lucide="images" class="w-5 h-5 stroke-[1.75]"></i>
+          <span>Memory Album</span>
+        </a>
+
+        <a href="reminders.html" class="nav-item flex items-center gap-3.5 px-4 py-3 rounded-xl font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 transition-all" data-nav="Reminders">
+          <i data-lucide="bell-ring" class="w-5 h-5 stroke-[1.75]"></i>
+          <span>Reminders</span>
+        </a>
+
+        <a href="progress.html" class="nav-item flex items-center gap-3.5 px-4 py-3 rounded-xl font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 transition-all" data-nav="Progress">
+          <i data-lucide="trending-up" class="w-5 h-5 stroke-[1.75]"></i>
+          <span>Progress</span>
+        </a>
+
+        <a href="profile.html" class="nav-item flex items-center gap-3.5 px-4 py-3 rounded-xl font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 transition-all" data-nav="Profile">
+          <i data-lucide="circle-user-round" class="w-5 h-5 stroke-[1.75]"></i>
+          <span>Profile</span>
+        </a>
+
+        <a href="settings.html" class="nav-item active flex items-center gap-3.5 px-4 py-3 rounded-xl font-medium transition-all" data-nav="Settings">
+          <i data-lucide="settings" class="w-5 h-5"></i>
+          <span>Settings</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Sidebar footer note -->
+    <div class="text-xs text-slate-400 text-center pt-4 border-t border-slate-200/60">
+      v1.0 • Care Platform
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="flex-1 flex flex-col h-screen overflow-y-auto bg-brand-canvas pb-12">
+    
+    <!-- Top Bar -->
+    <header class="w-full flex items-center justify-between gap-4 px-6 sm:px-10 py-5 bg-brand-canvas sticky top-0 z-20">
+      <div class="flex items-center gap-3">
+        <button id="open-sidebar-btn" class="lg:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100" aria-label="Open menu">
+          <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+      </div>
+      <div class="flex items-center gap-3 sm:gap-4">
+      <div class="flex items-center gap-2 sm:gap-3 bg-white border border-slate-200/80 px-3 sm:px-4 py-2 rounded-2xl shadow-xs text-slate-700 shrink-0" aria-label="Current date and time">
+        <div class="flex items-center gap-2 text-xs font-semibold text-slate-500">
+          <i data-lucide="calendar-days" class="w-4 h-4"></i>
+          <span id="current-day">Tuesday</span>
+        </div>
+        <span class="text-slate-300">•</span>
+        <div class="flex items-center gap-2 text-sm font-bold">
+          <span id="current-date">September 8, 2026</span>
+        </div>
+        <span class="text-slate-300">•</span>
+        <div class="flex items-center gap-2 text-sm font-black text-brand-navy">
+          <i data-lucide="clock-3" class="w-4 h-4"></i>
+          <span id="current-time">3:15 PM</span>
+        </div>
+      </div>
+      </div>
+    </header>
+    <!-- Settings Content Container -->
+    <div class="px-6 sm:px-10 max-w-4xl mx-auto w-full space-y-6 pb-10">
+
+      <!-- Page Heading -->
+      <div>
+        <p class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Preferences</p>
+        <h2 class="font-serif text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">Settings</h2>
+        <p class="text-slate-500 text-sm mt-2">Adjust accessibility, goals, and account options.</p>
+      </div>
+
+      <!-- Accessibility Card -->
+      <div class="bg-white rounded-3xl p-6 sm:p-7 border border-slate-100 shadow-sm space-y-5">
+        <div class="flex items-center gap-3 pb-1">
+          <div class="w-10 h-10 rounded-xl bg-teal-100/80 text-teal-700 flex items-center justify-center shrink-0">
+            <i data-lucide="accessibility" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="font-serif font-bold text-lg text-slate-900">Accessibility</h3>
+            <p class="text-xs text-slate-500">Make the app easier to see and hear.</p>
+          </div>
+        </div>
+
+        <!-- Voice Guidance Toggle -->
+        <div class="flex items-center justify-between p-4 rounded-2xl bg-slate-50 border border-slate-100">
+          <div class="flex items-center gap-3.5 pr-4">
+            <div class="w-9 h-9 rounded-xl bg-white border border-slate-200 text-slate-600 flex items-center justify-center shrink-0">
+              <i data-lucide="volume-2" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <div class="font-bold text-slate-800 text-sm">Voice Guidance</div>
+              <div class="text-xs text-slate-500">Read labels and hints out loud when tapped.</div>
+            </div>
+          </div>
+          <button id="toggle-voice-guidance" type="button" class="settings-toggle shrink-0" data-key="voiceGuidance" role="switch" aria-checked="true">
+            <span class="settings-toggle-knob"></span>
+          </button>
+        </div>
+
+        <!-- Larger Text Toggle -->
+        <div class="flex items-center justify-between p-4 rounded-2xl bg-slate-50 border border-slate-100">
+          <div class="flex items-center gap-3.5 pr-4">
+            <div class="w-9 h-9 rounded-xl bg-white border border-slate-200 text-slate-600 flex items-center justify-center shrink-0">
+              <i data-lucide="case-sensitive" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <div class="font-bold text-slate-800 text-sm">Larger Text</div>
+              <div class="text-xs text-slate-500">Increase text size across the whole app.</div>
+            </div>
+          </div>
+          <button id="toggle-larger-text" type="button" class="settings-toggle shrink-0" data-key="largerText" role="switch" aria-checked="false">
+            <span class="settings-toggle-knob"></span>
+          </button>
+        </div>
+
+        <!-- High Contrast Toggle -->
+        <div class="flex items-center justify-between p-4 rounded-2xl bg-slate-50 border border-slate-100">
+          <div class="flex items-center gap-3.5 pr-4">
+            <div class="w-9 h-9 rounded-xl bg-white border border-slate-200 text-slate-600 flex items-center justify-center shrink-0">
+              <i data-lucide="contrast" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <div class="font-bold text-slate-800 text-sm">High Contrast</div>
+              <div class="text-xs text-slate-500">Bolder colors and outlines for easier viewing.</div>
+            </div>
+          </div>
+          <button id="toggle-high-contrast" type="button" class="settings-toggle shrink-0" data-key="highContrast" role="switch" aria-checked="false">
+            <span class="settings-toggle-knob"></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Daily Goal Card -->
+      <div class="bg-white rounded-3xl p-6 sm:p-7 border border-slate-100 shadow-sm space-y-4">
+        <div class="flex items-center gap-3 pb-1">
+          <div class="w-10 h-10 rounded-xl bg-blue-100/80 text-blue-700 flex items-center justify-center shrink-0">
+            <i data-lucide="target" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="font-serif font-bold text-lg text-slate-900">Daily Game Goal</h3>
+            <p class="text-xs text-slate-500">How many games to encourage playing each day.</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <input id="daily-goal-input" type="number" min="1" max="10" value="3" class="w-24 bg-slate-100 rounded-xl px-4 py-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-mint text-center font-bold">
+          <span class="text-sm text-slate-500">games per day</span>
+          <button id="daily-goal-save-btn" type="button" class="ml-auto bg-brand-navy hover:bg-brand-navyHover text-white px-5 py-2.5 rounded-xl font-medium text-sm flex items-center gap-2 transition-all shadow-sm active:scale-[0.99]">
+            <span>Save</span>
+            <i data-lucide="check" class="w-4 h-4"></i>
+          </button>
+        </div>
+        <p id="daily-goal-confirmation" class="hidden text-sm text-emerald-700 font-medium flex items-center gap-1.5">
+          <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+          Daily goal updated.
+        </p>
+      </div>
+
+      <!-- Caregiver Password Card -->
+      <div class="bg-white rounded-3xl p-6 sm:p-7 border border-slate-100 shadow-sm space-y-4">
+        <div class="flex items-center gap-3 pb-1">
+          <div class="w-10 h-10 rounded-xl bg-rose-100/80 text-rose-700 flex items-center justify-center shrink-0">
+            <i data-lucide="key-round" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="font-serif font-bold text-lg text-slate-900">Caregiver Password</h3>
+            <p class="text-xs text-slate-500">Used to protect caregiver contact editing.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1.5">Current Password</label>
+            <input id="settings-current-password" type="password" placeholder="Current password" class="w-full bg-slate-100 rounded-xl px-4 py-3 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-rose-300">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1.5">New Password</label>
+            <input id="settings-new-password" type="password" placeholder="New password (min 4 characters)" class="w-full bg-slate-100 rounded-xl px-4 py-3 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-rose-300">
+          </div>
+        </div>
+        <p id="settings-password-error" class="hidden text-xs text-rose-600 font-medium"></p>
+        <p id="settings-password-success" class="hidden text-sm text-emerald-700 font-medium flex items-center gap-1.5">
+          <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+          Password updated.
+        </p>
+        <div class="flex justify-end">
+          <button id="settings-password-save-btn" type="button" class="bg-rose-700 hover:bg-rose-800 text-white px-5 py-2.5 rounded-xl font-medium text-sm flex items-center gap-2 transition-all shadow-sm active:scale-[0.99]">
+            <span>Update Password</span>
+            <i data-lucide="check" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Data & Privacy Card -->
+      <div class="bg-white rounded-3xl p-6 sm:p-7 border border-slate-100 shadow-sm space-y-4">
+        <div class="flex items-center gap-3 pb-1">
+          <div class="w-10 h-10 rounded-xl bg-slate-200/80 text-slate-700 flex items-center justify-center shrink-0">
+            <i data-lucide="database" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="font-serif font-bold text-lg text-slate-900">Data &amp; Privacy</h3>
+            <p class="text-xs text-slate-500">Everything is stored only on this device.</p>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-3">
+          <button id="reset-progress-btn" type="button" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 py-3 rounded-2xl text-sm font-semibold transition-all flex items-center justify-center gap-2">
+            <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+            <span>Reset Progress &amp; Game Levels</span>
+          </button>
+          <button id="clear-album-btn" type="button" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 py-3 rounded-2xl text-sm font-semibold transition-all flex items-center justify-center gap-2">
+            <i data-lucide="image-off" class="w-4 h-4"></i>
+            <span>Clear Memory Album</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- About footer -->
+      <div class="text-center text-xs text-slate-400 pt-2 pb-6">
+        Cognitive Care Platform • v1.0 • All data stays on this device
+      </div>
+
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+  <script>
+    function updateHeaderDateTime(){
+      const now=new Date();
+      const day=now.toLocaleDateString(undefined,{weekday:'long'});
+      const date=now.toLocaleDateString(undefined,{month:'long',day:'numeric',year:'numeric'});
+      const time=now.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit',hour12:true});
+      const d=document.getElementById('current-day'), dt=document.getElementById('current-date'), t=document.getElementById('current-time');
+      if(d)d.textContent=day; if(dt)dt.textContent=date; if(t)t.textContent=time;
+    }
+    updateHeaderDateTime(); setInterval(updateHeaderDateTime,1000);
+  </script>
+</body>
+</html>
