@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cognitive Care - Choose an Activity (Games)</title>
+  <!-- Google Fonts: Merriweather for serif headings, Plus Jakarta Sans for UI -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Merriweather', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              navy: '#062146',
+              navyHover: '#0A2D5C',
+              mint: '#80EEDF',
+              mintHover: '#6DE2D2',
+              mintDark: '#094F48',
+              canvas: '#FAF9F6',
+              sidebar: '#F8F9FA',
+              borderLight: '#ECEEF1',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+/* Custom Styling for Cognitive Care Portal */
+
+/* Active Sidebar Navigation Item */
+.nav-item.active {
+  background-color: #062146 !important;
+  color: #ffffff !important;
+}
+
+.nav-item.active i {
+  stroke: #ffffff !important;
+}
+
+/* Input Box Focus and Styling */
+.input-box {
+  background-color: #F1F3F5;
+  border: 1.5px solid transparent;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.input-box:focus-within {
+  background-color: #ffffff;
+  border-color: #80EEDF;
+  box-shadow: 0 0 0 4px rgba(128, 238, 223, 0.25);
+}
+
+/* Card Elevation Shadow */
+.login-card {
+  box-shadow: 0 25px 50px -12px rgba(6, 33, 70, 0.09), 0 4px 20px -2px rgba(0, 0, 0, 0.04);
+}
+
+/* Audio guidance speakable hover indicators */
+.audio-speakable {
+  transition: color 0.15s ease;
+  user-select: none;
+}
+
+.audio-speakable:hover {
+  color: #094F48;
+}
+
+.audio-speaking {
+  animation: speak-pulse 1.2s infinite ease-in-out;
+  color: #094F48 !important;
+}
+
+@keyframes speak-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.02);
+    opacity: 0.8;
+  }
+}
+
+/* Custom Scrollbar for responsiveness */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #E2E8F0;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #CBD5E1;
+}
+
+
+    /* Grow Your World — living illustrated garden */
+    .garden-game-shell{background:#f3f7f1}
+    .garden-scene{position:relative;min-height:430px;overflow:hidden;border-radius:30px;background:linear-gradient(180deg,#dceff6 0%,#edf5df 46%,#d7e8c7 47%,#91ba70 100%);border:1px solid rgba(255,255,255,.96);box-shadow:inset 0 -40px 70px rgba(49,82,45,.08)}
+    .garden-sun{position:absolute;right:44px;top:34px;width:54px;height:54px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff0a6 0 23%,#ffd45f 24% 60%,#f2b74a 61% 100%);box-shadow:0 10px 24px rgba(229,177,61,.18)}
+    .garden-cloud{position:absolute;z-index:2;width:100px;height:30px;background:rgba(255,255,255,.72);border-radius:50px;filter:blur(.2px);animation:garden-cloud-drift 30s linear infinite}
+    .garden-cloud::before,.garden-cloud::after{content:"";position:absolute;background:inherit;border-radius:50%}
+    .garden-cloud::before{width:40px;height:40px;left:18px;top:-16px}.garden-cloud::after{width:54px;height:54px;right:14px;top:-23px}
+    .garden-cloud.c1{left:9%;top:62px;transform:scale(.78);animation-delay:-9s}.garden-cloud.c2{left:54%;top:86px;transform:scale(.62);animation-delay:-20s;opacity:.55}
+    .garden-hill-back{position:absolute;left:-10%;right:-10%;bottom:160px;height:150px;background:#bdd99e;border-radius:50% 50% 0 0/100% 100% 0 0}
+    .garden-hill-front{position:absolute;left:-12%;right:-12%;bottom:52px;height:155px;background:#8ab66e;border-radius:50% 50% 0 0/100% 100% 0 0}
+    .garden-back-trees{position:absolute;inset:86px 0 auto 0;height:140px;pointer-events:none;z-index:3}
+    .garden-back-tree{position:absolute;bottom:15px;width:74px;height:90px;animation:garden-tree-sway 4.6s ease-in-out infinite}
+    .garden-back-tree::before{content:"";position:absolute;left:32px;bottom:0;width:10px;height:42px;border-radius:8px;background:#7e624d}
+    .garden-back-tree::after{content:"";position:absolute;left:8px;bottom:28px;width:58px;height:58px;border-radius:50%;background:#7dad5d;box-shadow:18px 4px 0 #87b966,-16px 8px 0 #759f56}
+    .garden-back-tree.t1{left:7%;transform:scale(.9)}.garden-back-tree.t2{right:8%;transform:scale(1.05);animation-delay:-2.2s}
+    .garden-fence{position:absolute;left:6%;right:6%;bottom:128px;height:44px;border-bottom:8px solid #c7a77a;opacity:.95;z-index:4}
+    .garden-fence::before{content:"";position:absolute;left:0;right:0;top:10px;height:10px;background:#d5b989;box-shadow:0 18px 0 #d5b989}
+    .garden-post{position:absolute;bottom:-10px;width:12px;height:58px;background:#bc9768;border-radius:4px;box-shadow:inset 2px 0 0 rgba(255,255,255,.2)}
+    .garden-post.p1{left:7%}.garden-post.p2{left:30%}.garden-post.p3{left:54%}.garden-post.p4{left:78%}.garden-post.p5{right:7%}
+    .garden-path{position:absolute;left:50%;bottom:-25px;transform:translateX(-50%);width:26%;height:235px;background:#ead8b8;clip-path:polygon(30% 0,70% 0,100% 100%,0 100%);box-shadow:inset 0 0 0 1px rgba(125,94,54,.09);z-index:5}
+    .garden-stone{position:absolute;left:50%;transform:translateX(-50%);width:52px;height:20px;background:#d5c4a7;border-radius:50%;box-shadow:0 4px 8px rgba(82,61,44,.08);z-index:6}
+    .garden-stone.s1{bottom:130px}.garden-stone.s2{bottom:88px;width:60px}.garden-stone.s3{bottom:46px;width:68px}
+    .garden-bed{position:absolute;bottom:63px;width:190px;height:58px;background:linear-gradient(#7e5a42,#6d4934);border-radius:50%;box-shadow:inset 0 7px 10px rgba(38,23,14,.2),0 5px 12px rgba(55,46,37,.08);z-index:6}
+    .garden-bed::after{content:"";position:absolute;inset:8px 16px 12px;border-radius:50%;background:#5e3b27;opacity:.68}
+    .garden-bed.left{left:6%}.garden-bed.right{right:6%}
+    .garden-object{position:absolute;z-index:12;transform-origin:center bottom;animation:garden-grow-in .7s cubic-bezier(.2,.8,.2,1) both;filter:drop-shadow(0 5px 6px rgba(41,57,34,.10));pointer-events:none}
+    .garden-object svg{display:block;width:100%;height:auto;overflow:visible}
+    .garden-tree-live svg{animation:garden-tree-sway 4.8s ease-in-out infinite;transform-origin:50% 90%}
+    .garden-object.garden-new-life{animation:garden-grow-in .9s cubic-bezier(.18,.83,.24,1) both}
+    .garden-life-layer{position:absolute;inset:0;z-index:18;pointer-events:none;overflow:hidden}
+    .garden-bird{position:absolute;width:54px;height:32px;filter:drop-shadow(0 3px 3px rgba(35,57,48,.12));animation:garden-bird-flight 16s linear infinite}
+    .garden-bird.b2{width:42px;transform:scale(.85);animation-duration:20s;animation-delay:-8s;top:88px}
+    .garden-bird svg{width:100%;height:100%;overflow:visible}
+    .garden-bird .wing{transform-origin:50% 85%;animation:garden-wing-flap .45s ease-in-out infinite alternate}
+    .garden-bird.b2 .wing{animation-delay:-.18s}
+    .garden-bee{position:absolute;width:42px;height:30px;animation:garden-bee-buzz 5.6s ease-in-out infinite}
+    .garden-bee.b2{animation-delay:-2.6s;transform:scale(.82)}
+    .garden-bee svg{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 2px 3px rgba(50,53,30,.14))}
+    .garden-bee .wing{transform-origin:50% 50%;animation:garden-wing-flutter .22s ease-in-out infinite alternate}
+    .garden-cat{position:absolute;left:-14%;bottom:36px;width:92px;height:60px;animation:garden-cat-walk 18s linear infinite;filter:drop-shadow(0 4px 4px rgba(57,52,41,.14))}
+    .garden-cat svg{width:100%;height:100%;overflow:visible}
+    .garden-cat .leg{transform-origin:50% 20%;animation:garden-cat-leg .42s ease-in-out infinite alternate}
+    .garden-cat .leg.l2{animation-delay:-.21s}.garden-cat .tail{transform-origin:10% 80%;animation:garden-tail-wag 1.2s ease-in-out infinite}
+    .garden-water-ripple{position:absolute;width:120px;height:42px;border-radius:50%;left:13%;bottom:118px;z-index:11;pointer-events:none}
+    .garden-water-ripple::before,.garden-water-ripple::after{content:"";position:absolute;inset:4px 18px;border:2px solid rgba(255,255,255,.6);border-radius:50%;animation:garden-ripple 3s ease-out infinite}
+    .garden-water-ripple::after{animation-delay:1.5s}
+    .garden-stage-text{min-height:24px}
+    @keyframes garden-grow-in{0%{opacity:0;transform:translateY(18px) scale(.62)}65%{opacity:1;transform:translateY(-3px) scale(1.04)}100%{opacity:1;transform:translateY(0) scale(1)}}
+    @keyframes garden-tree-sway{0%,100%{transform:rotate(-1.2deg)}50%{transform:rotate(1.2deg)}}
+    @keyframes garden-wing-flap{from{transform:rotate(-8deg)}to{transform:rotate(28deg)}}
+    @keyframes garden-wing-flutter{from{transform:rotateX(0deg) rotateZ(-9deg)}to{transform:rotateX(62deg) rotateZ(10deg)}}
+    @keyframes garden-bird-flight{0%{left:-9%;top:116px}25%{left:20%;top:78px}50%{left:48%;top:118px}75%{left:76%;top:72px}100%{left:110%;top:105px}}
+    @keyframes garden-bee-buzz{0%,100%{left:19%;bottom:130px;transform:translate(0,0)}25%{left:25%;bottom:150px;transform:translate(6px,-3px)}50%{left:31%;bottom:124px;transform:translate(-2px,4px)}75%{left:24%;bottom:112px;transform:translate(5px,-2px)}}
+    @keyframes garden-cat-walk{0%{left:-14%;bottom:34px}12%{bottom:39px}25%{bottom:34px}50%{left:48%;bottom:36px}75%{left:74%;bottom:33px}100%{left:112%;bottom:37px}}
+    @keyframes garden-cat-leg{from{transform:rotate(-18deg)}to{transform:rotate(18deg)}}
+    @keyframes garden-tail-wag{from{transform:rotate(-10deg)}to{transform:rotate(18deg)}}
+    @keyframes garden-ripple{0%{transform:scale(.7);opacity:.85}100%{transform:scale(1.35);opacity:0}}
+    @keyframes garden-cloud-drift{0%{margin-left:-2%}50%{margin-left:7%}100%{margin-left:-2%}}
+    @media(max-width:640px){.garden-scene{min-height:360px}.garden-bed{width:132px;height:48px}.garden-path{height:205px;width:30%}.garden-stone.s1{bottom:118px}.garden-stone.s2{bottom:78px}.garden-stone.s3{bottom:40px}.garden-sun{right:22px;top:22px;width:44px;height:44px}.garden-back-tree{transform:scale(.78)!important}.garden-fence{bottom:112px}.garden-cat{width:76px;height:50px}.garden-bird{width:42px;height:26px}.garden-bee{width:34px;height:24px}}
+
+
+
+</style>
+</head>
+<body class="font-sans bg-brand-canvas text-slate-800 antialiased h-screen overflow-hidden flex">
+
+  <!-- Mobile Sidebar Overlay Backdrop -->
+  <div id="sidebar-backdrop" class="fixed inset-0 bg-slate-900/30 backdrop-blur-sm z-30 hidden lg:hidden"></div>
+
+  <!-- Left Navigation Sidebar -->
+  <aside id="sidebar" class="w-64 bg-brand-sidebar border-r border-brand-borderLight flex flex-col justify-between p-6 z-40 fixed lg:static inset-y-0 -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
+    <div>
+      <div class="flex items-center justify-between pb-8">
+        <a href="home.html" class="flex items-center gap-3 font-serif font-bold text-slate-900 tracking-tight cursor-pointer min-w-0">
+          <img src="assets/cognitive-care-logo.png" alt="Cognitive Care" class="w-11 h-11 rounded-xl object-cover bg-black shadow-sm shrink-0">
+          <span class="leading-tight">Cognitive Care</span>
+        </a>
+        <button id="close-sidebar-btn" class="lg:hidden text-slate-400 hover:text-slate-600 p-1" aria-label="Close sidebar">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Navigation Menu Items -->
+      <nav class="space-y-1.5" aria-label="Main Navigation">
+        <a href="home.html" class="nav-item flex items-center gap-3.5 px-4 py-3 rounded-xl font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 transition-all" data-nav="Home">
+          <i data-lucide="layout-grid" class="w-5 h-5 stroke-[1.75]"></i>
+          <span>Home</span>
+        </a>
+
+        <a href="games.html" class="nav-item active flex items-center gap-3.5 px-4 py-3 rounded-xl font-medium transition-all" data-nav="Games">
+          <i data-lucide="gamepad-2" class="w-5 h-5"></i>
+          <span>Games</span>
+        </a>
+
+        <a href="album.html" class="nav-item flex items-center gap-3.5 px-4 py-3 rounded-xl font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 transition-all" data-nav="Memory Album">
+          <i data-lucide="images" class="w-5 h-5 stroke-[1.75]"></i>
+          <span>Memory Album</span>
+        </a>
+
+        <a href="reminders.html" class="nav-item flex items-center gap-3.5 px-4 py-3 rounded-xl font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 transition-all" data-nav="Reminders">
+          <i data-lucide="bell-ring" class="w-5 h-5 stroke-[1.75]"></i>
+          <span>Reminders</span>
+        </a>
+      <a href="progress.html" class="nav-item flex items-center gap-3.5 px-4 py-3 rounded-xl font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 transition-all" data-nav="Progress">
+          <i data-lucide="trending-up" class="w-5 h-5 stroke-[1.75]"></i>
+          <span>Progress</span>
+        </a>
+
+        <a href="profile.html" class="nav-item flex items-center gap-3.5 px-4 py-3 rounded-xl font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 transition-all" data-nav="Profile">
+          <i data-lucide="circle-user-round" class="w-5 h-5 stroke-[1.75]"></i>
+          <span>Profile</span>
+        </a>
+
+        <a href="settings.html" class="nav-item flex items-center gap-3.5 px-4 py-3 rounded-xl font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 transition-all" data-nav="Settings">
+          <i data-lucide="settings" class="w-5 h-5 stroke-[1.75]"></i>
+          <span>Settings</span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="text-xs text-slate-400 text-center pt-4 border-t border-slate-200/60">
+      v1.0 • Care Platform
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="flex-1 flex flex-col h-screen overflow-y-auto bg-brand-canvas pb-12">
+    
+    <!-- Top Bar -->
+    <header class="w-full flex items-center justify-between gap-4 px-6 sm:px-10 py-5 bg-brand-canvas sticky top-0 z-20">
+      <div class="flex items-center gap-3">
+        <button id="open-sidebar-btn" class="lg:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100" aria-label="Open menu">
+          <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+      </div>
+      <div class="flex items-center gap-3 sm:gap-4">
+      <div class="flex items-center gap-2 sm:gap-3 bg-white border border-slate-200/80 px-3 sm:px-4 py-2 rounded-2xl shadow-xs text-slate-700 shrink-0" aria-label="Current date and time">
+        <div class="flex items-center gap-2 text-xs font-semibold text-slate-500">
+          <i data-lucide="calendar-days" class="w-4 h-4"></i>
+          <span id="current-day">Tuesday</span>
+        </div>
+        <span class="text-slate-300">•</span>
+        <div class="flex items-center gap-2 text-sm font-bold">
+          <span id="current-date">September 8, 2026</span>
+        </div>
+        <span class="text-slate-300">•</span>
+        <div class="flex items-center gap-2 text-sm font-black text-brand-navy">
+          <i data-lucide="clock-3" class="w-4 h-4"></i>
+          <span id="current-time">3:15 PM</span>
+        </div>
+      </div>
+      </div>
+    
+      <div class="relative shrink-0" data-profile-menu>
+        <button type="button" class="profile-menu-btn w-10 h-10 rounded-2xl bg-white border border-slate-200/80 shadow-xs flex items-center justify-center text-slate-700 hover:bg-slate-50 transition-all" aria-haspopup="true" aria-expanded="false" aria-label="Account menu">
+          <i data-lucide="circle-user-round" class="w-5 h-5"></i>
+        </button>
+        <div class="profile-menu hidden absolute right-0 mt-2 w-52 bg-white border border-slate-200 rounded-2xl shadow-xl p-2 z-50">
+          <div class="px-3 py-2 border-b border-slate-100 mb-1">
+            <div class="text-[11px] text-slate-400">Account</div>
+            <div class="profile-menu-email text-xs font-semibold text-slate-800 truncate">Not signed in</div>
+          </div>
+          <a href="profile.html" class="profile-action profile-view flex items-center gap-2 w-full px-3 py-2.5 rounded-xl text-sm text-slate-700 hover:bg-slate-50">
+            <i data-lucide="user" class="w-4 h-4"></i><span>Profile</span>
+          </a>
+          <button type="button" class="profile-action profile-login hidden flex items-center gap-2 w-full px-3 py-2.5 rounded-xl text-sm text-slate-700 hover:bg-slate-50 text-left">
+            <i data-lucide="log-in" class="w-4 h-4"></i><span>Log in</span>
+          </button>
+          <button type="button" class="profile-action profile-logout hidden flex items-center gap-2 w-full px-3 py-2.5 rounded-xl text-sm text-rose-700 hover:bg-rose-50 text-left">
+            <i data-lucide="log-out" class="w-4 h-4"></i><span>Log out</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Page Content Container -->
+    <div class="px-6 sm:px-10 max-w-7xl mx-auto w-full space-y-8">
+
+      <!-- Header Row with Cognitive Stimulation Badge & Goal -->
+      <div class="space-y-3">
+        <div class="inline-flex items-center gap-2 bg-blue-100/70 text-blue-900 px-3.5 py-1.5 rounded-full text-xs font-semibold">
+          <i data-lucide="gamepad-2" class="w-4 h-4"></i>
+          <span>Cognitive Stimulation</span>
+        </div>
+
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div class="max-w-2xl">
+            <h2 class="font-serif text-3xl sm:text-5xl font-bold text-slate-900 tracking-tight">
+              Choose an Activity
+            </h2>
+            <p class="text-slate-600 text-base sm:text-lg mt-3 leading-relaxed">
+              Take your time and enjoy each activity. Designed specifically to keep your mind sharp while providing a relaxing, rewarding experience.
+            </p>
+          </div>
+
+          <!-- Daily Goal Card with dynamic bar -->
+          <div id="daily-goal-card" class="bg-white border border-slate-100 p-4 sm:p-5 rounded-3xl shadow-sm shrink-0 min-w-[280px] transition-all">
+            <div class="flex items-center gap-3.5 mb-2.5">
+              <div class="w-12 h-12 rounded-2xl bg-teal-800 text-white flex items-center justify-center shrink-0 shadow-xs">
+                <i data-lucide="brain-circuit" class="w-6 h-6"></i>
+              </div>
+              <div>
+                <div id="daily-goal-text" class="text-sm sm:text-base font-bold text-slate-900">Daily Goal: 0 / 3 Games</div>
+                <div id="daily-goal-subtext" class="text-xs sm:text-sm text-slate-500">0% completed today • Play 1 game to start!</div>
+              </div>
+            </div>
+            <!-- Dynamic Mini Progress Bar -->
+            <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+              <div id="daily-goal-bar" class="bg-teal-700 h-2 rounded-full transition-all duration-700 ease-out" style="width: 0%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 Activity Cards Grid (With Larger Fonts) -->
+      <div class="grid grid-cols-1 gap-6">
+
+        <!-- Activity Card 1: Card Matching -->
+        <div class="bg-white rounded-3xl p-7 border border-slate-100 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden">
+          <div>
+            <div class="flex items-center justify-between mb-5">
+              <div class="w-14 h-14 rounded-2xl bg-indigo-100/80 text-indigo-700 flex items-center justify-center">
+                <i data-lucide="layers" class="w-7 h-7 stroke-[1.8]"></i>
+              </div>
+              <span class="text-xs sm:text-sm font-semibold text-slate-600 bg-slate-100 px-3.5 py-1.5 rounded-full">Memory</span>
+            </div>
+
+            <h3 class="font-bold text-slate-900 text-xl sm:text-2xl mb-2.5">Card Matching</h3>
+            <p class="text-sm sm:text-base text-slate-600 leading-relaxed mb-6">
+              Find and match pairs of familiar real-world photos hidden behind cards on the board.
+            </p>
+
+            <div class="space-y-2.5 mb-7">
+              <div class="inline-flex items-center gap-2 bg-slate-50 border border-slate-100 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium text-slate-700 w-full">
+                <i data-lucide="target" class="w-4 h-4 text-slate-400"></i>
+                <span>Focus: Visual Memory</span>
+              </div>
+              <div class="inline-flex items-center gap-2 bg-slate-50 border border-slate-100 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium text-slate-700 w-full">
+                <i data-lucide="bar-chart-2" class="w-4 h-4 text-slate-400"></i>
+                <span>Level: <span id="level-label-cardMatching">Gentle</span></span>
+              </div>
+            </div>
+          </div>
+
+          <button onclick="launchGameModal('Card Matching')" class="w-full bg-brand-navy hover:bg-brand-navyHover text-white py-3.5 px-5 rounded-2xl font-semibold text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-md transition-all active:scale-[0.99] cursor-pointer">
+            <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+            <span>Start Game</span>
+          </button>
+        </div>
+
+        <!-- Activity Card 2: Remember the Objects -->
+        <div class="bg-white rounded-3xl p-7 border border-slate-100 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden">
+          <div>
+            <div class="flex items-center justify-between mb-5">
+              <div class="w-14 h-14 rounded-2xl bg-teal-100/80 text-teal-700 flex items-center justify-center">
+                <i data-lucide="eye" class="w-7 h-7 stroke-[1.8]"></i>
+              </div>
+              <span class="text-xs sm:text-sm font-semibold text-slate-600 bg-slate-100 px-3.5 py-1.5 rounded-full">Memory</span>
+            </div>
+
+            <h3 class="font-bold text-slate-900 text-xl sm:text-2xl mb-2.5">Remember the Objects</h3>
+            <p class="text-sm sm:text-base text-slate-600 leading-relaxed mb-6">
+              Observe real photos of everyday household objects, then spot which one went missing.
+            </p>
+
+            <div class="space-y-2.5 mb-7">
+              <div class="inline-flex items-center gap-2 bg-slate-50 border border-slate-100 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium text-slate-700 w-full">
+                <i data-lucide="target" class="w-4 h-4 text-slate-400"></i>
+                <span>Focus: Short-term Recall</span>
+              </div>
+              <div class="inline-flex items-center gap-2 bg-slate-50 border border-slate-100 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium text-slate-700 w-full">
+                <i data-lucide="bar-chart-2" class="w-4 h-4 text-slate-400"></i>
+                <span>Level: <span id="level-label-rememberObjects">Gentle</span></span>
+              </div>
+            </div>
+          </div>
+
+          <button onclick="launchGameModal('Remember the Objects')" class="w-full bg-brand-navy hover:bg-brand-navyHover text-white py-3.5 px-5 rounded-2xl font-semibold text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-md transition-all active:scale-[0.99] cursor-pointer">
+            <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+            <span>Start Game</span>
+          </button>
+        </div>
+
+        <!-- Activity Card 3: Arrange the Sequence -->
+        <div class="bg-white rounded-3xl p-7 border border-slate-100 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden">
+          <div>
+            <div class="flex items-center justify-between mb-5">
+              <div class="w-14 h-14 rounded-2xl bg-blue-100/80 text-blue-700 flex items-center justify-center">
+                <i data-lucide="list-ordered" class="w-7 h-7 stroke-[1.8]"></i>
+              </div>
+              <span class="text-xs sm:text-sm font-semibold text-slate-600 bg-slate-100 px-3.5 py-1.5 rounded-full">Reasoning</span>
+            </div>
+
+            <h3 class="font-bold text-slate-900 text-xl sm:text-2xl mb-2.5">Arrange the Sequence</h3>
+            <p class="text-sm sm:text-base text-slate-600 leading-relaxed mb-6">
+              Put story steps, daily routines, or numbered items back into their correct chronological order.
+            </p>
+
+            <div class="space-y-2.5 mb-7">
+              <div class="inline-flex items-center gap-2 bg-slate-50 border border-slate-100 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium text-slate-700 w-full">
+                <i data-lucide="target" class="w-4 h-4 text-slate-400"></i>
+                <span>Focus: Executive Function</span>
+              </div>
+              <div class="inline-flex items-center gap-2 bg-slate-50 border border-slate-100 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium text-slate-700 w-full">
+                <i data-lucide="bar-chart-2" class="w-4 h-4 text-slate-400"></i>
+                <span>Level: <span id="level-label-sequence">Gentle</span></span>
+              </div>
+            </div>
+          </div>
+
+          <button onclick="launchGameModal('Arrange the Sequence')" class="w-full bg-brand-navy hover:bg-brand-navyHover text-white py-3.5 px-5 rounded-2xl font-semibold text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-md transition-all active:scale-[0.99] cursor-pointer">
+            <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+            <span>Start Game</span>
+          </button>
+        </div>
+
+
+        <!-- Activity Card: Story Memory Journey -->
+        <div class="bg-white rounded-3xl p-7 border border-amber-100 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden">
+          <div class="absolute -right-10 -top-10 w-32 h-32 rounded-full bg-amber-50"></div>
+          <div class="relative z-10">
+            <div class="flex items-center justify-between mb-5">
+              <div class="w-14 h-14 rounded-2xl bg-amber-100/80 text-amber-700 flex items-center justify-center">
+                <i data-lucide="book-open-text" class="w-7 h-7 stroke-[1.8]"></i>
+              </div>
+              <span class="text-xs sm:text-sm font-semibold text-amber-800 bg-amber-50 px-3.5 py-1.5 rounded-full">Memory</span>
+            </div>
+            <h3 class="font-bold text-slate-900 text-xl sm:text-2xl mb-2.5">Story Memory Journey</h3>
+            <p class="text-sm sm:text-base text-slate-600 leading-relaxed mb-6">Read a short everyday story, remember the details, and answer questions to continue the journey.</p>
+            <div class="space-y-2.5 mb-7">
+              <div class="inline-flex items-center gap-2 bg-slate-50 border border-slate-100 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium text-slate-700 w-full"><i data-lucide="target" class="w-4 h-4 text-slate-400"></i><span>Focus: Story Recall</span></div>
+              <div class="inline-flex items-center gap-2 bg-slate-50 border border-slate-100 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium text-slate-700 w-full"><i data-lucide="sparkles" class="w-4 h-4 text-slate-400"></i><span>4 scenes • Level: <span id="level-label-story">Gentle</span></span></div>
+            </div>
+          </div>
+          <button onclick="launchStoryGame()" class="relative z-10 w-full bg-amber-700 hover:bg-amber-800 text-white py-3.5 px-5 rounded-2xl font-semibold text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-md transition-all active:scale-[0.99] cursor-pointer"><i data-lucide="play" class="w-4 h-4 fill-current"></i><span>Start Story Game</span></button>
+        </div>
+
+        <!-- Activity Card 4: Grow Your World -->
+        <div class="bg-white rounded-3xl p-7 border border-emerald-100 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden">
+          <div class="absolute -right-10 -top-10 w-32 h-32 rounded-full bg-emerald-50"></div>
+          <div class="relative z-10">
+            <div class="flex items-center justify-between mb-5">
+              <div class="w-14 h-14 rounded-2xl bg-emerald-100/80 text-emerald-700 flex items-center justify-center">
+                <i data-lucide="sprout" class="w-7 h-7 stroke-[1.8]"></i>
+              </div>
+              <span class="text-xs sm:text-sm font-semibold text-emerald-800 bg-emerald-50 px-3.5 py-1.5 rounded-full">Attention</span>
+            </div>
+            <h3 class="font-bold text-slate-900 text-xl sm:text-2xl mb-2.5">Grow Your World</h3>
+            <p class="text-sm sm:text-base text-slate-600 leading-relaxed mb-6">
+              Remember the glowing garden path, then recreate it from memory. Each round grows your garden a little more.
+            </p>
+            <div class="space-y-2.5 mb-7">
+              <div class="inline-flex items-center gap-2 bg-slate-50 border border-slate-100 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium text-slate-700 w-full">
+                <i data-lucide="eye" class="w-4 h-4 text-slate-400"></i>
+                <span>Focus: Attention &amp; Recall</span>
+              </div>
+              <div class="inline-flex items-center gap-2 bg-slate-50 border border-slate-100 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium text-slate-700 w-full">
+                <i data-lucide="leaf" class="w-4 h-4 text-slate-400"></i>
+                <span>Level: <span id="level-label-garden">Gentle</span> • Garden: <span id="garden-card-stage">Seedling</span></span>
+              </div>
+            </div>
+          </div>
+          <button onclick="openGardenGame()" class="relative z-10 w-full bg-emerald-700 hover:bg-emerald-800 text-white py-3.5 px-5 rounded-2xl font-semibold text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-md transition-all active:scale-[0.99] cursor-pointer">
+            <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+            <span>Start Garden Game</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Bottom Coming Soon Banner -->
+      <div class="rounded-3xl p-8 sm:p-10 border border-teal-100/70 bg-gradient-to-r from-emerald-50/40 via-teal-50/50 to-cyan-50/30 relative overflow-hidden shadow-xs">
+        <div class="relative z-10 space-y-3">
+          <div class="inline-flex items-center gap-1.5 bg-teal-100 text-teal-800 px-3.5 py-1.5 rounded-full text-xs font-semibold">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+            <span>In Development</span>
+          </div>
+          <h3 class="font-serif text-3xl font-bold text-slate-900 tracking-tight">
+            Coming Soon
+          </h3>
+          <p class="text-slate-500 text-sm max-w-lg">
+            New sensory stimulation, rhythm tapping, and audio trivia games will be unlocked in your next scheduled weekly caregiver update.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+
+  <!-- Story Memory Journey modal -->
+  <div id="story-game-modal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-[70] hidden items-center justify-center p-3 sm:p-6 overflow-y-auto">
+    <div class="bg-[#fffdf8] rounded-[32px] max-w-3xl w-full shadow-2xl overflow-hidden my-auto border border-amber-100">
+      <div class="p-5 sm:p-7 border-b border-amber-100 flex items-start justify-between gap-4 bg-white/90">
+        <div>
+          <div class="text-xs font-extrabold uppercase tracking-[.16em] text-amber-700">Cognitive Care • Story Game</div>
+          <h3 class="font-serif text-3xl sm:text-4xl font-bold text-slate-900 mt-1">Story Memory Journey</h3>
+          <p class="text-sm sm:text-base text-slate-600 mt-2">Read, remember, and answer a question about each scene.</p>
+        </div>
+        <button onclick="closeStoryGame()" class="w-11 h-11 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center shrink-0" aria-label="Close story game"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      <div class="p-5 sm:p-8">
+        <div class="flex flex-wrap gap-2 justify-between items-center mb-5">
+          <div id="story-progress" class="text-sm font-bold text-slate-700 bg-white border border-amber-100 rounded-2xl px-4 py-2">Scene 1 of 4</div>
+          <div id="story-score" class="text-sm font-bold text-amber-800 bg-amber-50 border border-amber-100 rounded-2xl px-4 py-2">Recall: 0 / 0</div>
+        </div>
+        <div id="story-content"></div>
+        <div id="story-actions" class="mt-6"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grow Your World game modal -->
+  <div id="garden-game-modal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-[60] hidden items-center justify-center p-3 sm:p-6 overflow-y-auto">
+    <div class="garden-game-shell rounded-[32px] max-w-5xl w-full shadow-2xl overflow-hidden my-auto">
+      <div class="bg-white/90 p-5 sm:p-7 border-b border-emerald-100 flex items-start justify-between gap-4 sticky top-0 z-20">
+        <div>
+          <div class="text-xs font-extrabold uppercase tracking-[.16em] text-emerald-700">Cognitive Care • Garden Game</div>
+          <h3 class="font-serif text-3xl sm:text-4xl font-bold text-slate-900 mt-1">Grow Your World</h3>
+          <p class="text-sm sm:text-base text-slate-600 mt-2">Watch the garden path. Then tap the photos in the same order.</p>
+        </div>
+        <button onclick="closeGardenGame()" class="w-11 h-11 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center shrink-0" aria-label="Close garden game"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      <div class="p-5 sm:p-8">
+        <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-3 mb-4 items-center">
+          <div id="garden-game-status" class="text-center bg-white border border-emerald-100 rounded-2xl px-4 py-3 text-sm font-bold text-emerald-900 shadow-sm">Get ready…</div>
+          <div class="flex gap-2 justify-center">
+            <div id="garden-game-round" class="rounded-2xl bg-white border border-slate-200 px-4 py-3 text-sm font-bold text-slate-700">Round 1</div>
+            <div id="garden-game-growth-count" class="rounded-2xl bg-emerald-700 text-white px-4 py-3 text-sm font-bold">Garden: 0</div>
+          </div>
+        </div>
+        <div class="rounded-3xl p-3 sm:p-5 bg-white border border-slate-100 shadow-sm">
+          <div id="garden-game-board" class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4"></div>
+        </div>
+        <div class="mt-5 text-center text-sm text-slate-500">Every correct round unlocks the next garden stage.</div>
+        <div id="garden-game-reward" class="hidden mt-6">
+          <div class="bg-emerald-50 border border-emerald-200 rounded-3xl p-4 sm:p-5">
+            <div class="flex items-center justify-between gap-4 mb-4">
+              <div><div class="text-xs font-extrabold uppercase tracking-[.14em] text-emerald-700">Garden Growth</div><div id="garden-reward-title" class="font-serif text-2xl sm:text-3xl font-bold text-slate-900">Your garden grew!</div></div>
+              <div class="rounded-2xl bg-white border border-emerald-100 px-4 py-2 text-center"><div id="garden-reward-stage" class="text-lg font-black text-emerald-800">Seedling</div><div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">stage</div></div>
+            </div>
+            <div class="garden-scene" aria-label="Your growing garden">
+              <div class="garden-sun"></div>
+              <div class="garden-cloud c1"></div><div class="garden-cloud c2"></div>
+              <div class="garden-back-trees"><div class="garden-back-tree t1"></div><div class="garden-back-tree t2"></div></div>
+              <div class="garden-hill-back"></div><div class="garden-hill-front"></div>
+              <div class="garden-fence"><span class="garden-post p1"></span><span class="garden-post p2"></span><span class="garden-post p3"></span><span class="garden-post p4"></span><span class="garden-post p5"></span></div>
+              <div class="garden-path"></div>
+              <div class="garden-stone s1"></div><div class="garden-stone s2"></div><div class="garden-stone s3"></div>
+              <div class="garden-bed left"></div><div class="garden-bed right"></div>
+              <div class="garden-water-ripple" id="garden-water-ripple" hidden></div>
+              <div id="garden-stage-objects"></div>
+              <div id="garden-life-layer" class="garden-life-layer" aria-hidden="true"></div>
+            </div>
+            <div id="garden-reward-message" class="garden-stage-text mt-4 text-center text-sm sm:text-base font-semibold text-slate-700"></div>
+          </div>
+        </div>
+        <div id="garden-game-actions" class="mt-5 flex flex-wrap justify-center gap-3"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive Mini Game Modal (Enlarged & Real Photos) -->
+  <div id="game-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+    <div class="bg-white rounded-[32px] max-w-lg sm:max-w-2xl w-full p-6 sm:p-9 shadow-2xl relative text-center space-y-6 my-auto border border-slate-100">
+      <div id="modal-icon-container" class="w-16 h-16 rounded-2xl bg-indigo-100 text-indigo-700 flex items-center justify-center mx-auto shadow-sm">
+        <i id="modal-icon" data-lucide="sparkles" class="w-8 h-8"></i>
+      </div>
+      <div>
+        <h3 id="modal-game-title" class="font-serif text-2xl sm:text-3xl font-bold text-slate-900">Card Matching</h3>
+        <p id="modal-game-desc" class="text-sm sm:text-base text-slate-600 mt-1.5 leading-relaxed">Match the 2 pairs below to warm up your visual memory!</p>
+      </div>
+      
+      <!-- Interactive Container for Current Game -->
+      <div id="active-game-container" class="py-2">
+        <!-- Will be dynamically injected by startGame -->
+      </div>
+
+      <!-- Result Banner (Hidden during play) -->
+      <div id="victory-banner" class="hidden bg-emerald-50 border-2 border-emerald-200 rounded-3xl p-6 text-center space-y-4">
+        <div class="text-4xl">🎉 🌟 🏆</div>
+        <div class="font-bold text-emerald-950 text-xl">Activity Complete!</div>
+        <div class="text-sm text-emerald-800 font-medium">
+          Your score: <span id="victory-score" class="font-extrabold text-base bg-white px-2 py-0.5 rounded-md text-emerald-900 border border-emerald-200">100%</span> • Mind focus rating increased!
+        </div>
+        <div class="text-xs sm:text-sm font-semibold text-slate-700 bg-white p-3 rounded-2xl border border-emerald-100 shadow-xs">
+          ✅ Added to <span class="font-bold text-slate-900">Activities Completed</span> & Daily Goal!
+        </div>
+        <div class="pt-2 flex flex-col gap-2.5">
+          <a href="progress.html" class="w-full bg-brand-navy hover:bg-brand-navyHover text-white py-3.5 px-5 rounded-2xl text-sm font-bold shadow-md transition-all">
+            View My Updated Progress Dashboard →
+          </a>
+          <button onclick="restartActiveGame()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 py-3 rounded-2xl text-xs sm:text-sm font-semibold transition-all">
+            Play Another Round
+          </button>
+        </div>
+      </div>
+
+      <div id="modal-footer-btns" class="pt-2 flex gap-3">
+        <button onclick="closeGameModal()" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 py-3.5 rounded-2xl text-xs sm:text-sm font-semibold transition-all">
+          Exit Activity
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+
+    // --- STORY MEMORY JOURNEY ---
+    // Three story banks provide different content across levels.
+    const STORY_BANKS = [
+      [
+        {title:'A Quiet Morning', text:'Maya opened the curtains at 8:00 AM and noticed a bright yellow bird on the balcony. She watered her basil plant, made a cup of tea, and placed a blue book beside the window.', question:'What color was the bird?', choices:['Yellow','Blue','Green'], answer:'Yellow'},
+        {title:'A Visit to the Garden', text:'After breakfast, Maya walked to the community garden. She carried her blue book, a small water bottle, and a red umbrella. Near the roses, she met her neighbor Ravi.', question:'Which item did Maya carry?', choices:['A red umbrella','A green scarf','A silver camera'], answer:'A red umbrella'},
+        {title:'A Small Surprise', text:'Ravi showed Maya a new wooden bench beside the roses. A tiny orange butterfly landed on the bench for a moment. Maya smiled and left one flower in a small vase near the path.', question:'Where did the butterfly land?', choices:['On the bench','On the vase','On the path'], answer:'On the bench'},
+        {title:'The Walk Home', text:'Before going home, Maya picked up her blue book, thanked Ravi, and walked back at 10:30 AM. She left the red umbrella by the door to dry.', question:'What time did Maya walk home?', choices:['9:30 AM','10:30 AM','11:30 AM'], answer:'10:30 AM'},
+        {title:'An Afternoon Note', text:'At home, Maya wrote a short note about the garden and placed it beside the blue book. She watered the basil plant again before making lunch.', question:'Where did Maya place the note?', choices:['Beside the blue book','Under the bench','Near the roses'], answer:'Beside the blue book'}
+      ],
+      [
+        {title:'The Market Trip', text:'Arjun left home at 9:00 AM with a canvas bag. At the market he bought three oranges, a loaf of bread, and a small bunch of mint.', question:'What did Arjun buy three of?', choices:['Oranges','Loaves of bread','Bunches of mint'], answer:'Oranges'},
+        {title:'The Helpful Neighbor', text:'On the way back, Arjun met Leela near the library. She was carrying a green basket and offered him a blue cloth bag for the bread.', question:'What color was Leela’s basket?', choices:['Green','Blue','Yellow'], answer:'Green'},
+        {title:'Tea at Home', text:'Arjun returned home, put the oranges in a bowl, and made ginger tea. He left the mint on the kitchen counter for dinner.', question:'Where did he put the oranges?', choices:['In a bowl','On the counter','In the bag'], answer:'In a bowl'},
+        {title:'A Short Call', text:'After tea, Arjun called his sister for five minutes. She reminded him to bring the blue cloth bag when they met on Saturday.', question:'Who did Arjun call?', choices:['His sister','His neighbor','His friend'], answer:'His sister'},
+        {title:'Dinner Plans', text:'Before dinner, Arjun put the mint into a small glass jar and wrote “Saturday” on a paper note beside the phone.', question:'What day was written on the note?', choices:['Saturday','Sunday','Friday'], answer:'Saturday'}
+      ],
+      [
+        {title:'A Rainy Afternoon', text:'Nina heard rain at 2:15 PM and closed the kitchen window. She placed a purple umbrella by the door and made tomato soup for lunch.', question:'What did Nina place by the door?', choices:['A purple umbrella','A yellow coat','A blue bag'], answer:'A purple umbrella'},
+        {title:'The Photo Box', text:'Later, Nina opened a wooden photo box and found a picture of a seaside trip. A small silver key was tucked beneath the photograph.', question:'What was tucked beneath the photograph?', choices:['A silver key','A red button','A paper note'], answer:'A silver key'},
+        {title:'A Gentle Visit', text:'Her cousin Tara arrived with two white lilies. They sat near the window and talked about an old school teacher named Mr. Sen.', question:'What flowers did Tara bring?', choices:['White lilies','Red roses','Yellow tulips'], answer:'White lilies'},
+        {title:'The Evening Walk', text:'When the rain stopped, Nina and Tara walked to the corner shop at 5:40 PM. Nina bought a loaf of bread while Tara chose a small notebook.', question:'What did Nina buy?', choices:['Bread','A notebook','Tea'], answer:'Bread'},
+        {title:'A Calm Night', text:'Back home, Nina put the silver key back in the photo box and placed the notebook on the reading table before turning on the lamp.', question:'Where did Nina put the notebook?', choices:['On the reading table','In the photo box','By the door'], answer:'On the reading table'}
+      ]
+    ];
+    let activeStoryScenes = STORY_BANKS[0].slice(0,3);
+    let storyState={scene:0,correct:0,answered:0};
+    function launchStoryGame(){
+      const level=getGameLevel('story');
+      const sceneCount=Math.min(3 + Math.floor((level-1)/2),5);
+      const bank=STORY_BANKS[(level-1)%STORY_BANKS.length];
+      activeStoryScenes=bank.slice(0,sceneCount);
+      storyState={scene:0,correct:0,answered:0};
+      const m=document.getElementById('story-game-modal');if(!m)return;
+      m.classList.remove('hidden');m.classList.add('flex');renderStoryScene();
+      if(window.lucide)window.lucide.createIcons();
+      if(typeof speak==='function')speak(`Starting Story Memory Journey, level ${level}. Read each scene carefully.`);
+    }
+    function closeStoryGame(){const m=document.getElementById('story-game-modal');if(!m)return;m.classList.add('hidden');m.classList.remove('flex');}
+    function renderStoryScene(){
+      const sc=activeStoryScenes[storyState.scene];
+      document.getElementById('story-progress').textContent=`Scene ${storyState.scene+1} of ${activeStoryScenes.length} • Level ${getGameLevel('story')}`;
+      document.getElementById('story-score').textContent=`Recall: ${storyState.correct} / ${storyState.answered}`;
+      document.getElementById('story-content').innerHTML=`
+        <div id="story-reading-card" class="rounded-[28px] border border-amber-100 bg-white p-5 sm:p-7 shadow-sm">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center text-2xl">📖</div>
+            <div><h4 class="font-serif text-2xl sm:text-3xl font-bold text-slate-900">${sc.title}</h4><p class="text-xs font-bold uppercase tracking-[.12em] text-slate-400 mt-1">Read and remember</p></div>
+          </div>
+          <p class="text-base sm:text-lg leading-8 text-slate-700">${sc.text}</p>
+          <div class="mt-6 flex justify-center">
+            <button type="button" onclick="hideStoryTextAndAsk()" class="bg-amber-700 hover:bg-amber-800 text-white px-6 py-3.5 rounded-2xl font-bold shadow-sm">I’ve read it — hide the story</button>
+          </div>
+        </div>`;
+      document.getElementById('story-actions').innerHTML='';
+    }
+    function hideStoryTextAndAsk(){
+      const sc=activeStoryScenes[storyState.scene];
+      const card=document.getElementById('story-reading-card');
+      if(card){card.innerHTML=`<div class="text-center py-4 sm:py-6"><div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center text-2xl mx-auto mb-4">🧠</div><h4 class="font-serif text-2xl sm:text-3xl font-bold text-slate-900">The story is hidden</h4><p class="text-sm sm:text-base text-slate-600 mt-2">Now answer from memory. Take your time.</p></div>`;}
+      document.getElementById('story-actions').innerHTML=`<div class="rounded-2xl bg-amber-50 border border-amber-100 p-4 sm:p-5"><div class="text-base font-extrabold text-amber-900 mb-3">${sc.question}</div><div class="grid grid-cols-1 sm:grid-cols-3 gap-3">${sc.choices.map(c=>`<button type="button" onclick="answerStory(this, '${c.replace(/'/g,"\\'")}')" class="story-choice w-full text-left bg-white border-2 border-amber-100 hover:border-amber-400 hover:bg-amber-50 rounded-2xl px-4 py-4 font-bold text-slate-800 transition-all">${c}</button>`).join('')}</div></div>`;
+    }
+    function answerStory(btn,choice){
+      const sc=activeStoryScenes[storyState.scene];
+      document.querySelectorAll('.story-choice').forEach(b=>b.disabled=true);
+      storyState.answered++;const ok=choice===sc.answer;if(ok)storyState.correct++;
+      if(ok){btn.classList.add('border-emerald-400','bg-emerald-50','text-emerald-900');}else{btn.classList.add('border-rose-300','bg-rose-50','text-rose-800');document.querySelectorAll('.story-choice').forEach(b=>{if(b.textContent===sc.answer)b.classList.add('border-emerald-400','bg-emerald-50');});}
+      const actions=document.getElementById('story-actions');actions.insertAdjacentHTML('beforeend',`<div class="mt-4 rounded-2xl ${ok?'bg-emerald-50 border-emerald-200 text-emerald-900':'bg-slate-50 border-slate-200 text-slate-700'} border px-4 py-3 text-sm font-semibold">${ok?'✓ Correct!':'↺ The answer was '+sc.answer+'.'} Keep going and remember the next detail.</div>`);
+      setTimeout(()=>{if(storyState.scene<activeStoryScenes.length-1){storyState.scene++;renderStoryScene();}else finishStoryGame();},850);
+    }
+    function finishStoryGame(){const score=Math.round(storyState.correct/storyState.answered*100);recordCompletedActivity('Story Memory Journey','memory',score);advanceGameLevel('story');renderGameLevelBadges();document.getElementById('story-content').innerHTML=`<div class="text-center rounded-[28px] bg-white border border-amber-100 p-7 sm:p-10 shadow-sm"><div class="w-16 h-16 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center text-3xl mx-auto mb-4">📚</div><h4 class="font-serif text-3xl font-bold text-slate-900">Story complete!</h4><p class="text-slate-600 mt-2">You remembered ${storyState.correct} of ${storyState.answered} details.</p><div class="mt-6 inline-flex px-5 py-3 rounded-2xl bg-amber-50 border border-amber-100 font-black text-amber-800">${score}% recall</div></div>`;document.getElementById('story-actions').innerHTML=`<div class="flex flex-wrap justify-center gap-3"><button onclick="launchStoryGame()" class="bg-amber-700 hover:bg-amber-800 text-white px-5 py-3 rounded-2xl font-bold">Play Level ${getGameLevel('story')}</button><button onclick="closeStoryGame()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-5 py-3 rounded-2xl font-bold">Close</button></div>`;if(typeof speak==='function')speak(`Story complete. You scored ${score} percent recall.`);}
+
+    // --- GROW YOUR WORLD: gradual garden progression ---
+    let gardenGame = { sequence: [], input: [], active: false, round: 1, timer: null };
+    const gardenPhotos = [
+      { name:'Flower', url:'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=700&q=80' },
+      { name:'Plant', url:'https://images.unsplash.com/photo-1497250681960-ef046c08a56e?auto=format&fit=crop&w=700&q=80' },
+      { name:'Apple', url:'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=700&q=80' },
+      { name:'Book', url:'https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=700&q=80' },
+      { name:'Coffee', url:'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=700&q=80' },
+      { name:'Sunflower', url:'https://images.unsplash.com/photo-1470509037663-253afd7f0f51?auto=format&fit=crop&w=700&q=80' }
+    ];
+    const gardenStages = [
+      {name:'Seedling', message:'A tiny seedling begins your garden.'},
+      {name:'First Flower', message:'A first flower opens beside the path.', kind:'flower'},
+      {name:'Flower Bed', message:'More flowers bloom around the first bed.', kind:'flower2'},
+      {name:'Berry Bush', message:'A leafy berry bush begins to fill the corner.', kind:'bush'},
+      {name:'Young Tree', message:'Your tree grows taller and spreads new branches.', kind:'tree-young'},
+      {name:'Growing Tree', message:'The young tree has become a leafy garden tree.', kind:'tree-mature'},
+      {name:'Honey Bees', message:'Honey bees arrive and buzz from flower to flower.', kind:'bees'},
+      {name:'Butterflies', message:'Butterflies join the flowers and drift through the garden.', kind:'butterfly'},
+      {name:'Birdhouse', message:'A birdhouse gives visiting birds a safe little home.', kind:'birdhouse'},
+      {name:'Flying Birds', message:'Birds now fly across the garden sky.', kind:'birds'},
+      {name:'Garden Bench', message:'A peaceful bench gives the garden a place to pause.', kind:'bench'},
+      {name:'Pond', message:'A calm pond settles into the grass beside the path.', kind:'pond'},
+      {name:'Walking Cat', message:'A friendly cat now wanders through the garden.', kind:'cat'},
+      {name:'Vegetable Patch', message:'The garden now has a small vegetable patch.', kind:'vegetables'},
+      {name:'Garden Lantern', message:'A warm lantern lights the path at dusk.', kind:'lantern'},
+      {name:'Second Tree', message:'Another tree takes root, making the garden feel fuller.', kind:'tree2'},
+      {name:'Bird Bath', message:'A little bird bath gives the garden another place for birds to visit.', kind:'birdbath'},
+      {name:'Fruit Tree', message:'The garden tree now carries its first fruit.', kind:'fruit'},
+      {name:'Full Garden', message:'Your garden is now a lively little world of plants and animals.', kind:'full'}
+    ];
+    const gardenObjects = {
+      flower:{name:'Flower',svg:`<svg viewBox="0 0 88 110"><path d="M44 100 C44 78 44 57 44 44" stroke="#5d8e4b" stroke-width="6" stroke-linecap="round"/><path d="M43 74 C31 67 24 67 17 72 C25 82 33 84 43 80" fill="#76b85d"/><path d="M46 64 C56 58 64 59 72 64 C66 73 58 76 46 72" fill="#88c966"/><ellipse cx="44" cy="33" rx="13" ry="18" fill="#f08aa8"/><ellipse cx="29" cy="35" rx="13" ry="18" transform="rotate(-42 29 35)" fill="#f47fa5"/><ellipse cx="59" cy="35" rx="13" ry="18" transform="rotate(42 59 35)" fill="#f47fa5"/><circle cx="44" cy="35" r="8" fill="#f5c85c"/></svg>`},
+      flower2:{name:'Flower Bed',svg:`<svg viewBox="0 0 180 120"><path d="M28 108 C28 83 31 64 36 52 M91 110 C90 81 91 60 91 44 M146 108 C144 84 145 63 150 52" stroke="#5d8e4b" stroke-width="6" stroke-linecap="round"/><path d="M32 82 C20 74 14 74 8 79 C18 90 24 92 35 88 M92 75 C81 68 72 68 66 74 C74 84 83 86 93 82 M148 82 C158 75 168 75 175 81 C166 91 158 91 148 87" fill="#77b85d"/><g fill="#ef7fa6"><circle cx="38" cy="44" r="18"/><circle cx="91" cy="36" r="18"/><circle cx="150" cy="44" r="18"/></g><g fill="#f7c85c"><circle cx="38" cy="44" r="7"/><circle cx="91" cy="36" r="7"/><circle cx="150" cy="44" r="7"/></g></svg>`},
+      bush:{name:'Berry Bush',svg:`<svg viewBox="0 0 130 90"><path d="M65 80 C46 65 42 44 50 26" stroke="#6b513b" stroke-width="7" stroke-linecap="round"/><circle cx="48" cy="40" r="28" fill="#5b8f53"/><circle cx="77" cy="38" r="26" fill="#699f59"/><circle cx="92" cy="57" r="22" fill="#5f9655"/><circle cx="54" cy="54" r="22" fill="#72aa61"/><circle cx="61" cy="42" r="4.5" fill="#6c405d"/><circle cx="77" cy="55" r="4.5" fill="#6c405d"/><circle cx="91" cy="47" r="4.5" fill="#7d465f"/></svg>`},
+      treeYoung:{name:'Young Tree',svg:`<svg viewBox="0 0 150 190"><path d="M72 176 C74 141 74 107 73 78" stroke="#7b5b40" stroke-width="13" stroke-linecap="round"/><path d="M73 111 C53 98 39 90 26 86" stroke="#7b5b40" stroke-width="8" stroke-linecap="round"/><path d="M74 108 C95 97 107 90 120 84" stroke="#7b5b40" stroke-width="8" stroke-linecap="round"/><circle cx="44" cy="65" r="32" fill="#6ea357"/><circle cx="80" cy="47" r="37" fill="#78ad5e"/><circle cx="111" cy="68" r="31" fill="#65974f"/><circle cx="74" cy="78" r="39" fill="#70a756"/></svg>`},
+      treeMature:{name:'Mature Tree',svg:`<svg viewBox="0 0 190 235"><path d="M92 222 C95 171 95 128 94 88" stroke="#72523b" stroke-width="16" stroke-linecap="round"/><path d="M94 136 C60 118 40 102 26 86" stroke="#72523b" stroke-width="10" stroke-linecap="round"/><path d="M95 138 C125 118 145 100 163 82" stroke="#72523b" stroke-width="10" stroke-linecap="round"/><circle cx="53" cy="78" r="43" fill="#5f984f"/><circle cx="96" cy="51" r="50" fill="#76aa59"/><circle cx="139" cy="73" r="42" fill="#5e9150"/><circle cx="102" cy="90" r="48" fill="#6ea457"/><circle cx="68" cy="45" r="20" fill="#84b965" opacity=".9"/></svg>`},
+      bench:{name:'Garden Bench',svg:`<svg viewBox="0 0 170 105"><rect x="24" y="30" width="122" height="24" rx="7" fill="#a96842"/><rect x="28" y="52" width="114" height="19" rx="6" fill="#b9784b"/><path d="M40 71 L31 96 M130 71 L139 96 M63 71 L57 96 M107 71 L113 96" stroke="#7a553e" stroke-width="7" stroke-linecap="round"/></svg>`},
+      pond:{name:'Garden Pond',svg:`<svg viewBox="0 0 210 118"><ellipse cx="105" cy="70" rx="86" ry="36" fill="#6db0b7"/><ellipse cx="105" cy="67" rx="67" ry="25" fill="#8bd1cf"/><ellipse cx="75" cy="57" rx="22" ry="9" fill="#b6e6df" opacity=".65"/><path d="M66 32 C78 14 92 16 103 30 C92 38 77 39 66 32Z" fill="#6c9f57"/><path d="M145 37 C157 21 168 24 176 39 C164 45 153 44 145 37Z" fill="#73a95f"/><circle cx="72" cy="29" r="7" fill="#d0e68a"/><circle cx="122" cy="78" r="4" fill="#d5ece7"/></svg>`},
+      lantern:{name:'Garden Lantern',svg:`<svg viewBox="0 0 90 145"><path d="M45 20 L45 126" stroke="#655544" stroke-width="8" stroke-linecap="round"/><path d="M28 38 L62 38 L57 76 L33 76 Z" fill="#d9a957" stroke="#745a43" stroke-width="5"/><circle cx="45" cy="57" r="12" fill="#ffe18b"/><path d="M36 20 Q45 8 54 20" fill="none" stroke="#655544" stroke-width="6" stroke-linecap="round"/><circle cx="45" cy="132" r="12" fill="#5a4a3b"/></svg>`},
+      birdhouse:{name:'Birdhouse',svg:`<svg viewBox="0 0 110 150"><path d="M55 46 L55 137" stroke="#74563d" stroke-width="9"/><path d="M20 62 L55 28 L90 62 Z" fill="#9e6b43"/><rect x="28" y="57" width="54" height="50" rx="4" fill="#c68a56"/><circle cx="55" cy="80" r="11" fill="#5d4636"/><path d="M44 129 H66" stroke="#74563d" stroke-width="9" stroke-linecap="round"/></svg>`},
+      birdbath:{name:'Bird Bath',svg:`<svg viewBox="0 0 130 110"><path d="M65 50 L65 98" stroke="#8c8c82" stroke-width="10"/><ellipse cx="65" cy="45" rx="45" ry="15" fill="#b7c9c3"/><ellipse cx="65" cy="43" rx="30" ry="8" fill="#8fd0cc"/><path d="M40 34 C55 23 72 24 86 34" fill="none" stroke="#9aa89f" stroke-width="5"/></svg>`},
+      vegetables:{name:'Vegetable Patch',svg:`<svg viewBox="0 0 190 125"><ellipse cx="95" cy="99" rx="82" ry="22" fill="#7b5537"/><path d="M34 94 C34 71 38 60 48 51 M77 96 C77 69 81 58 90 48 M122 96 C121 69 126 57 135 48 M158 94 C158 71 161 60 171 52" stroke="#5f8d4d" stroke-width="7" stroke-linecap="round"/><circle cx="49" cy="49" r="13" fill="#e68168"/><circle cx="91" cy="47" r="13" fill="#f0a95d"/><circle cx="136" cy="47" r="13" fill="#8fb95c"/><circle cx="170" cy="51" r="12" fill="#d98c5d"/></svg>`},
+      tree2:{name:'Second Tree',svg:`<svg viewBox="0 0 150 190"><path d="M73 177 C74 144 74 111 72 82" stroke="#72533d" stroke-width="12" stroke-linecap="round"/><path d="M73 112 C54 101 42 92 31 83" stroke="#72533d" stroke-width="8" stroke-linecap="round"/><circle cx="46" cy="67" r="31" fill="#6c9f54"/><circle cx="78" cy="49" r="36" fill="#7ab05d"/><circle cx="109" cy="69" r="29" fill="#65964f"/></svg>`},
+      fruit:{name:'Fruit Tree',svg:`<svg viewBox="0 0 190 235"><path d="M92 222 C95 171 95 128 94 88" stroke="#72523b" stroke-width="16" stroke-linecap="round"/><path d="M94 136 C60 118 40 102 26 86 M95 138 C125 118 145 100 163 82" stroke="#72523b" stroke-width="10" stroke-linecap="round"/><circle cx="53" cy="78" r="43" fill="#5f984f"/><circle cx="96" cy="51" r="50" fill="#76aa59"/><circle cx="139" cy="73" r="42" fill="#5e9150"/><circle cx="102" cy="90" r="48" fill="#6ea457"/><circle cx="61" cy="83" r="7" fill="#e36c49"/><circle cx="111" cy="50" r="7" fill="#e36c49"/><circle cx="142" cy="84" r="7" fill="#e36c49"/></svg>`}
+    };
+    const gardenPositions = {
+      flower:{left:'19%',bottom:'92px',width:'74px'},
+      flower2:{left:'15%',bottom:'78px',width:'150px'},
+      bush:{right:'16%',bottom:'82px',width:'108px'},
+      tree:{left:'1%',bottom:'75px',width:'122px'},
+      bench:{left:'8%',bottom:'76px',width:'128px'},
+      pond:{left:'8%',bottom:'83px',width:'150px'},
+      lantern:{right:'13%',bottom:'90px',width:'52px'},
+      birdhouse:{right:'23%',bottom:'143px',width:'58px'},
+      birdbath:{right:'8%',bottom:'82px',width:'96px'},
+      vegetables:{right:'4%',bottom:'62px',width:'150px'},
+      tree2:{right:'0%',bottom:'76px',width:'112px'},
+      fruit:{left:'1%',bottom:'72px',width:'145px'}
+    };
+    function getGardenProgress(){ try{return Math.max(0,Number(localStorage.getItem('cognitiveCareGardenStageV2')||0));}catch(e){return 0;} }
+    function setGardenProgress(v){ try{localStorage.setItem('cognitiveCareGardenStageV2',String(v));}catch(e){} }
+    function addGardenObject(wrap, key, extraClass='', delay=0, posKey=key){
+      const data=gardenObjects[key]; if(!data) return;
+      const el=document.createElement('div'); el.className=`garden-object ${extraClass}`;
+      const pos=gardenPositions[posKey]||{};
+      el.style.width=pos.width||'80px'; if(pos.left)el.style.left=pos.left; if(pos.right)el.style.right=pos.right; el.style.bottom=pos.bottom||'70px'; el.style.animationDelay=`${delay}ms`; el.innerHTML=data.svg; wrap.appendChild(el); return el;
+    }
+    function renderGardenLife(life, count){
+      if(!life) return; life.innerHTML='';
+      if(count>=6){
+        life.innerHTML += `<div class="garden-bee"><svg viewBox="0 0 90 62"><ellipse cx="47" cy="32" rx="24" ry="16" fill="#f2c84c"/><path d="M34 20 L42 44 M47 17 L55 47" stroke="#5c4d36" stroke-width="7"/><circle cx="30" cy="31" r="9" fill="#5c4d36"/><ellipse class="wing" cx="35" cy="13" rx="12" ry="7" fill="#dff4f2" opacity=".9" transform="rotate(-20 35 13)"/><ellipse class="wing" cx="59" cy="15" rx="12" ry="7" fill="#dff4f2" opacity=".9" transform="rotate(15 59 15)"/></svg></div>`;
+        life.innerHTML += `<div class="garden-bee b2"><svg viewBox="0 0 90 62"><ellipse cx="47" cy="32" rx="24" ry="16" fill="#efc548"/><path d="M34 20 L42 44 M47 17 L55 47" stroke="#5c4d36" stroke-width="7"/><circle cx="30" cy="31" r="9" fill="#5c4d36"/><ellipse class="wing" cx="35" cy="13" rx="12" ry="7" fill="#dff4f2" opacity=".9" transform="rotate(-20 35 13)"/><ellipse class="wing" cx="59" cy="15" rx="12" ry="7" fill="#dff4f2" opacity=".9" transform="rotate(15 59 15)"/></svg></div>`;
+      }
+      if(count>=9){
+        life.innerHTML += `<div class="garden-bird b1"><svg viewBox="0 0 100 58"><ellipse cx="50" cy="32" rx="24" ry="14" fill="#607d75"/><circle cx="72" cy="26" r="9" fill="#607d75"/><path d="M80 27 L94 32 L80 36Z" fill="#e1ad4e"/><path d="M31 32 L15 28 L22 42Z" fill="#526d68"/><ellipse class="wing" cx="49" cy="19" rx="22" ry="9" fill="#7c9991" transform="rotate(-12 49 19)"/><circle cx="75" cy="23" r="2.2" fill="#1e2a29"/></svg></div>`;
+        life.innerHTML += `<div class="garden-bird b2"><svg viewBox="0 0 100 58"><ellipse cx="50" cy="32" rx="24" ry="14" fill="#8a6e61"/><circle cx="72" cy="26" r="9" fill="#8a6e61"/><path d="M80 27 L94 32 L80 36Z" fill="#e1ad4e"/><path d="M31 32 L15 28 L22 42Z" fill="#785c52"/><ellipse class="wing" cx="49" cy="19" rx="22" ry="9" fill="#a28779" transform="rotate(-12 49 19)"/><circle cx="75" cy="23" r="2.2" fill="#1e2a29"/></svg></div>`;
+      }
+      if(count>=12){
+        life.innerHTML += `<div class="garden-cat"><svg viewBox="0 0 120 78"><path class="tail" d="M26 47 C5 52 8 24 26 30" fill="none" stroke="#8d735f" stroke-width="9" stroke-linecap="round"/><ellipse cx="62" cy="47" rx="30" ry="18" fill="#a88a72"/><circle cx="90" cy="37" r="16" fill="#b0957d"/><path d="M79 26 L83 10 L92 23 M95 23 L104 10 L106 29" fill="#b0957d"/><circle cx="95" cy="35" r="2.5" fill="#2d302a"/><path d="M72 46 L48 46" stroke="#b0957d" stroke-width="7" stroke-linecap="round"/><path class="leg" d="M47 58 L43 71" stroke="#866d59" stroke-width="7" stroke-linecap="round"/><path class="leg l2" d="M70 58 L75 71" stroke="#866d59" stroke-width="7" stroke-linecap="round"/><path d="M87 45 L108 41" stroke="#866d59" stroke-width="5" stroke-linecap="round"/></svg></div>`;
+      }
+      if(count>=16){
+        life.innerHTML += `<div class="garden-bird b2" style="top:128px;animation-duration:22s;animation-delay:-3s"><svg viewBox="0 0 100 58"><ellipse cx="50" cy="32" rx="24" ry="14" fill="#6c7f72"/><circle cx="72" cy="26" r="9" fill="#6c7f72"/><path d="M80 27 L94 32 L80 36Z" fill="#e1ad4e"/><path d="M31 32 L15 28 L22 42Z" fill="#596d62"/><ellipse class="wing" cx="49" cy="19" rx="22" ry="9" fill="#879b8e" transform="rotate(-12 49 19)"/></svg></div>`;
+      }
+    }
+    function renderGardenScene(){
+      const count=Math.min(getGardenProgress(),gardenStages.length-1);
+      const wrap=document.getElementById('garden-stage-objects'); if(!wrap) return; wrap.innerHTML='';
+      // Persistent garden pieces. The tree itself changes size as the garden develops.
+      if(count>=1)addGardenObject(wrap,'flower','garden-new-life',80,'flower');
+      if(count>=2)addGardenObject(wrap,'flower2','garden-new-life',120,'flower2');
+      if(count>=3)addGardenObject(wrap,'bush','garden-new-life',160,'bush');
+      if(count>=4)addGardenObject(wrap,'treeYoung','garden-tree-live garden-new-life garden-main-tree',190,'tree');
+      if(count>=5){const oldTree=wrap.querySelector('.garden-main-tree');if(oldTree)oldTree.remove();addGardenObject(wrap,'treeMature','garden-tree-live garden-new-life garden-main-tree',190,'tree');}
+      if(count>=10)addGardenObject(wrap,'bench','garden-new-life',90,'bench');
+      if(count>=11){addGardenObject(wrap,'pond','garden-new-life',110,'pond');const rip=document.getElementById('garden-water-ripple');if(rip)rip.hidden=false;}
+      if(count>=8)addGardenObject(wrap,'birdhouse','garden-new-life',130,'birdhouse');
+      if(count>=13)addGardenObject(wrap,'vegetables','garden-new-life',150,'vegetables');
+      if(count>=14)addGardenObject(wrap,'lantern','garden-new-life',170,'lantern');
+      if(count>=15)addGardenObject(wrap,'tree2','garden-tree-live garden-new-life',200,'tree2');
+      if(count>=16)addGardenObject(wrap,'birdbath','garden-new-life',220,'birdbath');
+      if(count>=17){const old=wrap.querySelector('.garden-main-tree');if(old)old.remove();addGardenObject(wrap,'fruit','garden-tree-live garden-new-life garden-main-tree',230,'fruit');}
+      const life=document.getElementById('garden-life-layer');renderGardenLife(life,count);
+      const stage=gardenStages[count];
+      const rewardStage=document.getElementById('garden-reward-stage'); if(rewardStage) rewardStage.textContent=stage.name;
+      const msg=document.getElementById('garden-reward-message'); if(msg) msg.textContent=stage.message;
+      const card=document.getElementById('garden-card-stage'); if(card) card.textContent=stage.name;
+      const countEl=document.getElementById('garden-game-growth-count'); if(countEl) countEl.textContent=`Garden: ${count}`;
+    }
+    function openGardenGame(){const m=document.getElementById('garden-game-modal');if(!m)return;m.classList.remove('hidden');m.classList.add('flex');gardenGame.round=1;renderGardenScene();startGardenRound();if(window.lucide)window.lucide.createIcons();}
+    function closeGardenGame(){const m=document.getElementById('garden-game-modal');if(!m)return;if(gardenGame.timer)clearTimeout(gardenGame.timer);m.classList.add('hidden');m.classList.remove('flex');gardenGame.active=false;}
+    function startGardenRound(){
+      if(gardenGame.timer)clearTimeout(gardenGame.timer);
+      gardenGame.active=false; gardenGame.input=[];
+      const board=document.getElementById('garden-game-board'),status=document.getElementById('garden-game-status'),actions=document.getElementById('garden-game-actions'),roundEl=document.getElementById('garden-game-round'),reward=document.getElementById('garden-game-reward');
+      if(!board||!status||!actions)return; if(reward)reward.classList.add('hidden'); actions.innerHTML='';
+      const level=getGameLevel('garden'); const sequenceLength=Math.min(2+Math.min(gardenGame.round, level+1),6);
+      gardenGame.sequence=shuffleGarden([...Array(6).keys()]).slice(0,sequenceLength);
+      if(roundEl)roundEl.textContent=`Round ${gardenGame.round} • ${sequenceLength} steps`;
+      status.textContent=`Watch carefully — remember ${sequenceLength} photos.`; board.innerHTML='';
+      for(let i=0;i<6;i++){const p=gardenPhotos[i],tile=document.createElement('button');tile.type='button';tile.disabled=true;tile.dataset.pos=i;tile.className='rounded-[22px] border-4 border-white bg-white shadow-md overflow-hidden transition-all';tile.innerHTML=`<div class="aspect-square overflow-hidden"><img src="${p.url}" alt="${p.name}" class="w-full h-full object-cover"></div><div class="px-3 py-2.5 text-sm font-bold text-slate-800">${p.name}</div>`;board.appendChild(tile);}
+      const tiles=[...board.children]; tiles.forEach(t=>{t.style.opacity='.28';t.style.transform='scale(.97)';});
+      let step=0;
+      const reveal=()=>{tiles.forEach(t=>{t.style.opacity='.28';t.style.transform='scale(.97)';t.classList.remove('ring-4','ring-emerald-400','border-emerald-400');});if(step<gardenGame.sequence.length){const t=tiles[gardenGame.sequence[step]];t.style.opacity='1';t.style.transform='scale(1.035)';t.classList.add('ring-4','ring-emerald-400','border-emerald-400');step++;const revealSpeed=Math.max(430,850-(getGameLevel('garden')*70));gardenGame.timer=setTimeout(reveal,revealSpeed);}else{tiles.forEach(t=>{t.style.opacity='1';t.style.transform='scale(1)';});gardenGame.timer=setTimeout(enableGardenInput,300);}};
+      gardenGame.timer=setTimeout(reveal,650);
+    }
+    function enableGardenInput(){const board=document.getElementById('garden-game-board'),status=document.getElementById('garden-game-status'),actions=document.getElementById('garden-game-actions');if(!board||!status||!actions)return;gardenGame.active=true;status.textContent='Your turn — tap the photos in the exact order.';actions.innerHTML='<button type="button" onclick="startGardenRound()" class="text-sm font-semibold text-slate-500 hover:text-slate-700 px-4 py-2 rounded-xl">Restart round</button>';[...board.children].forEach(tile=>{tile.disabled=false;tile.classList.add('cursor-pointer','hover:scale-[1.02]');tile.onclick=()=>handleGardenInput(Number(tile.dataset.pos),tile);});}
+    function handleGardenInput(pos,tile){if(!gardenGame.active)return;const expected=gardenGame.sequence[gardenGame.input.length];if(pos!==expected){gardenGame.active=false;tile.classList.add('ring-4','ring-rose-400','border-rose-400');const s=document.getElementById('garden-game-status');if(s)s.textContent='Not quite — try the sequence again. 🌱';const a=document.getElementById('garden-game-actions');if(a)a.innerHTML='<button type="button" onclick="startGardenRound()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-5 py-3 rounded-2xl font-bold text-sm">Try This Round Again</button>';if(typeof speak==='function')speak('Not quite. Let us try that round again.');return;}
+      gardenGame.input.push(pos);tile.classList.add('ring-4','ring-emerald-400','border-emerald-400');if(gardenGame.input.length===gardenGame.sequence.length){gardenGame.active=false;const score=Math.max(80,100-(gardenGame.round-1)*3);recordCompletedActivity('Grow Your World','attention',score);advanceGameLevel('garden');renderGameLevelBadges();let growth=Math.min(getGardenProgress()+1,gardenStages.length-1);setGardenProgress(growth);renderGardenScene();const reward=document.getElementById('garden-game-reward'),title=document.getElementById('garden-reward-title'),status=document.getElementById('garden-game-status'),actions=document.getElementById('garden-game-actions');if(reward)reward.classList.remove('hidden');if(title)title.textContent=`Your garden reached ${gardenStages[growth].name}!`;if(status)status.textContent='Correct! Your garden grew.';if(actions)actions.innerHTML=`<button type="button" onclick="gardenGame.round++; startGardenRound()" class="bg-emerald-700 hover:bg-emerald-800 text-white px-5 py-3 rounded-2xl font-bold text-sm">Grow It Again</button>`;if(typeof speak==='function')speak(`Great job. Your garden grew to ${gardenStages[growth].name}.`);}}
+    function shuffleGarden(arr){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+    let currentGame = '';
+    let matchedPairs = 0;
+    let flippedCards = [];
+    let totalPairsNeeded = 2;
+
+    // Pool of real photo objects to draw from — a different subset is picked
+    // every round so patients see variety instead of the same items each time.
+    const PHOTO_OBJECTS = {
+      apple:   { name: 'Fresh Red Apple',   img: 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400&auto=format&fit=crop&q=80' },
+      keys:    { name: 'House Keys',        img: 'https://images.unsplash.com/photo-1582139329536-e7284fece509?w=400&auto=format&fit=crop&q=80' },
+      book:    { name: 'Reading Book',      img: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&auto=format&fit=crop&q=80' },
+      glasses: { name: 'Reading Glasses',   img: 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=400&auto=format&fit=crop&q=80' },
+      coffee:  { name: 'Hot Coffee Mug',    img: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400&auto=format&fit=crop&q=80' },
+      watch:   { name: 'Wrist Watch',       img: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=400&auto=format&fit=crop&q=80' },
+      flower:  { name: 'Fresh Flower',      img: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400&auto=format&fit=crop&q=80' },
+      umbrella:{ name: 'Umbrella',          img: 'assets/umbrella.svg' },
+      hat:     { name: 'Sun Hat',           img: 'https://images.unsplash.com/photo-1521369909029-2afed882baee?w=400&auto=format&fit=crop&q=80' },
+      phone:   { name: 'Telephone',         img: 'https://images.unsplash.com/photo-1596558450268-9c27524ba856?w=400&auto=format&fit=crop&q=80' }
+    };
+    const PHOTO_OBJECT_KEYS = Object.keys(PHOTO_OBJECTS);
+
+    // Several routine sets so "Arrange the Sequence" isn't always the same story.
+    const SEQUENCE_SETS = [
+      [
+        { emoji: '🌅', text: 'Wake Up & Morning Stretch' },
+        { emoji: '🥣', text: 'Eat Healthy Breakfast' },
+        { emoji: '🚶', text: 'Take a Walk in the Garden' },
+        { emoji: '🥤', text: 'Drink a Glass of Water' },
+        { emoji: '💊', text: 'Take Afternoon Medication' },
+        { emoji: '📞', text: 'Call a Friend or Family Member' },
+        { emoji: '🌙', text: 'Get Ready for Bed' }
+      ],
+      [
+        { emoji: '🚿', text: 'Take a Morning Shower' },
+        { emoji: '👕', text: 'Get Dressed for the Day' },
+        { emoji: '☕', text: 'Enjoy a Cup of Tea' },
+        { emoji: '📖', text: 'Read the Newspaper' },
+        { emoji: '🧹', text: 'Tidy One Small Area' },
+        { emoji: '🛏️', text: 'Take an Afternoon Nap' },
+        { emoji: '🍲', text: 'Enjoy an Evening Meal' }
+      ],
+      [
+        { emoji: '🍳', text: 'Cook a Simple Breakfast' },
+        { emoji: '📺', text: 'Watch a Favorite Show' },
+        { emoji: '🧺', text: 'Fold the Laundry' },
+        { emoji: '🪴', text: 'Water a Houseplant' },
+        { emoji: '🍽️', text: 'Eat Dinner with Family' },
+        { emoji: '🦷', text: 'Brush Teeth Before Bed' },
+        { emoji: '💡', text: 'Turn Off the Lights' }
+      ]
+    ];
+
+    // Shuffle helper — Fisher-Yates
+    function shuffleArray(arr) {
+      const a = arr.slice();
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    // Refresh the "Level: Gentle/Moderate/Advanced" badges on the activity cards
+    function renderGameLevelBadges() {
+      const map = { cardMatching: 'level-label-cardMatching', rememberObjects: 'level-label-rememberObjects', sequence: 'level-label-sequence', story: 'level-label-story', garden: 'level-label-garden' };
+      Object.keys(map).forEach(key => {
+        const el = document.getElementById(map[key]);
+        if (el) el.textContent = gameLevelLabel(getGameLevel(key));
+      });
+    }
+    document.addEventListener('DOMContentLoaded', renderGameLevelBadges);
+
+    function launchGameModal(gameName) {
+      currentGame = gameName;
+      const modal = document.getElementById('game-modal');
+      const title = document.getElementById('modal-game-title');
+      const desc = document.getElementById('modal-game-desc');
+      const victoryBanner = document.getElementById('victory-banner');
+      const footerBtns = document.getElementById('modal-footer-btns');
+
+      victoryBanner.classList.add('hidden');
+      footerBtns.classList.remove('hidden');
+      modal.classList.remove('hidden');
+
+      if (gameName === 'Card Matching') {
+        const level = getGameLevel('cardMatching');
+        title.textContent = `Card Matching · Level ${level}`;
+        desc.textContent = 'Tap cards to find the matching real photo pairs!';
+        setupCardMatchingGame();
+      } else if (gameName === 'Remember the Objects') {
+        const level = getGameLevel('rememberObjects');
+        title.textContent = `Remember the Objects · Level ${level}`;
+        desc.textContent = 'Study the real photos, then spot which one went missing!';
+        setupRememberObjectsGame();
+      } else if (gameName === 'Arrange the Sequence') {
+        const level = getGameLevel('sequence');
+        title.textContent = `Arrange the Sequence · Level ${level}`;
+        desc.textContent = 'Tap the steps in the correct order, from first to last!';
+        setupSequenceGame();
+      }
+
+      speak(`Starting ${gameName}. Take your time and enjoy.`);
+      if (window.lucide) window.lucide.createIcons();
+    }
+
+    function closeGameModal() {
+      document.getElementById('game-modal').classList.add('hidden');
+    }
+
+    function restartActiveGame() {
+      launchGameModal(currentGame);
+    }
+
+    // --- GAME 1: Card Matching with REAL PHOTOS ---
+    // Level 1: 2 pairs (4 cards) · Level 2: 3 pairs (6 cards) · Level 3: 4 pairs (8 cards)
+    function setupCardMatchingGame() {
+      const container = document.getElementById('active-game-container');
+      matchedPairs = 0;
+      flippedCards = [];
+
+      const level = getGameLevel('cardMatching');
+      totalPairsNeeded = level + 1; // 2, 3, 4
+
+      const chosenKeys = shuffleArray(PHOTO_OBJECT_KEYS).slice(0, totalPairsNeeded);
+      let cardItems = [];
+      chosenKeys.forEach(key => {
+        cardItems.push({ id: key, ...PHOTO_OBJECTS[key] });
+        cardItems.push({ id: key, ...PHOTO_OBJECTS[key] });
+      });
+      cardItems = shuffleArray(cardItems);
+
+      const gridColsClass = totalPairsNeeded >= 4 ? 'grid-cols-4' : 'grid-cols-2';
+      const maxWidthClass = totalPairsNeeded >= 4 ? 'max-w-[680px]' : 'max-w-[480px]';
+
+      container.innerHTML = `
+        <p class="text-sm sm:text-base font-semibold text-slate-500 mb-3">Find all ${totalPairsNeeded} matching pairs</p>
+        <div class="grid ${gridColsClass} gap-3.5 sm:gap-5 ${maxWidthClass} mx-auto">
+          ${cardItems.map((item, i) => `
+            <button onclick="handlePhotoCardClick(this, '${item.id}', '${item.img}', '${item.name}')" 
+              class="h-32 sm:h-44 bg-slate-100 hover:bg-slate-200/80 rounded-2xl p-2 transition-all flex flex-col items-center justify-center shadow-xs border-2 border-slate-200 card-btn relative overflow-hidden group">
+              <div class="card-cover text-5xl sm:text-6xl font-bold text-slate-400 group-hover:scale-110 transition-transform">❓</div>
+              <div class="card-content hidden flex-col items-center justify-center w-full h-full">
+                <img src="${item.img}" alt="${item.name}" onerror="this.onerror=null;this.src='assets/umbrella.svg'" class="w-20 h-20 sm:w-28 sm:h-28 object-cover rounded-xl shadow-xs bg-white">
+                <span class="text-xs sm:text-sm font-bold text-slate-800 mt-1.5 truncate max-w-full">${item.name}</span>
+              </div>
+            </button>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    function handlePhotoCardClick(btn, id, img, name) {
+      if (!btn.querySelector('.card-content').classList.contains('hidden') || flippedCards.length >= 2) return;
+      
+      btn.querySelector('.card-cover').classList.add('hidden');
+      btn.querySelector('.card-content').classList.remove('hidden');
+      btn.classList.remove('bg-slate-100', 'border-slate-200');
+      btn.classList.add('bg-teal-50', 'border-teal-400');
+
+      flippedCards.push({ btn, id, name });
+
+      if (flippedCards.length === 2) {
+        if (flippedCards[0].id === flippedCards[1].id) {
+          matchedPairs++;
+          speak(`Match found! ${name}!`);
+          flippedCards = [];
+          if (matchedPairs === totalPairsNeeded) {
+            setTimeout(() => onGameVictory('Card Matching', 'memory', 100, 'cardMatching'), 600);
+          }
+        } else {
+          setTimeout(() => {
+            flippedCards.forEach(c => {
+              c.btn.querySelector('.card-cover').classList.remove('hidden');
+              c.btn.querySelector('.card-content').classList.add('hidden');
+              c.btn.classList.remove('bg-teal-50', 'border-teal-400');
+              c.btn.classList.add('bg-slate-100', 'border-slate-200');
+            });
+            flippedCards = [];
+          }, 900);
+        }
+      }
+    }
+
+    // --- GAME 2: Remember the Objects with REAL PHOTOS ---
+    // Level 1: study 3 objects · Level 2: study 4 · Level 3: study 5
+    let recallStudySet = [];
+    let recallMissingKey = '';
+
+    function setupRememberObjectsGame() {
+      const container = document.getElementById('active-game-container');
+      const level = getGameLevel('rememberObjects');
+      const studyCount = level + 2; // 3, 4, 5
+
+      const chosenKeys = shuffleArray(PHOTO_OBJECT_KEYS).slice(0, studyCount);
+      recallStudySet = chosenKeys;
+
+      const gridColsClass = studyCount >= 5 ? 'grid-cols-3' : 'grid-cols-2';
+
+      container.innerHTML = `
+        <div class="space-y-5">
+          <p class="text-sm sm:text-base font-semibold text-teal-900 bg-teal-50 py-2.5 px-4 rounded-2xl border border-teal-200">
+            👀 Study these ${studyCount} real objects carefully:
+          </p>
+          <div class="grid ${gridColsClass} gap-3.5 sm:gap-5">
+            ${chosenKeys.map(key => `
+              <div class="p-2.5 bg-slate-50 rounded-2xl border border-slate-200 shadow-xs flex flex-col items-center text-center">
+                <img src="${PHOTO_OBJECTS[key].img}" alt="${PHOTO_OBJECTS[key].name}" class="w-full h-32 sm:h-40 object-cover rounded-xl shadow-xs">
+                <span class="text-sm sm:text-base font-bold text-slate-800 mt-2">${PHOTO_OBJECTS[key].name}</span>
+              </div>
+            `).join('')}
+          </div>
+          <button onclick="startPhotoRecallTest()" class="w-full bg-brand-navy hover:bg-brand-navyHover text-white py-3.5 rounded-2xl text-sm sm:text-base font-bold shadow-md transition-all">
+            I'm Ready! Hide one object →
+          </button>
+        </div>
+      `;
+    }
+
+    function startPhotoRecallTest() {
+      const container = document.getElementById('active-game-container');
+
+      // Pick one studied object to hide, and two distractors NOT in the study set
+      recallMissingKey = recallStudySet[Math.floor(Math.random() * recallStudySet.length)];
+      const remainingStudied = recallStudySet.filter(k => k !== recallMissingKey);
+      const distractorPool = PHOTO_OBJECT_KEYS.filter(k => !recallStudySet.includes(k));
+      const distractors = shuffleArray(distractorPool).slice(0, 2);
+      const choices = shuffleArray([recallMissingKey, ...distractors]);
+
+      const gridColsClass = remainingStudied.length + 1 >= 5 ? 'grid-cols-3' : 'grid-cols-2';
+
+      container.innerHTML = `
+        <div class="space-y-5">
+          <p class="text-sm sm:text-base font-bold text-amber-900 bg-amber-50 py-2.5 px-4 rounded-2xl border border-amber-200">
+            ❓ Which everyday object went missing?
+          </p>
+          <div class="grid ${gridColsClass} gap-3.5 sm:gap-5">
+            ${remainingStudied.map(key => `
+              <div class="p-2.5 bg-slate-50 rounded-2xl border border-slate-200 shadow-xs flex flex-col items-center text-center">
+                <img src="${PHOTO_OBJECTS[key].img}" alt="${PHOTO_OBJECTS[key].name}" class="w-full h-32 sm:h-40 object-cover rounded-xl shadow-xs">
+                <span class="text-sm sm:text-base font-bold text-slate-800 mt-2">${PHOTO_OBJECTS[key].name}</span>
+              </div>
+            `).join('')}
+            <div class="p-2.5 bg-teal-50/80 rounded-2xl border-2 border-dashed border-teal-400 shadow-xs flex flex-col items-center justify-center text-center h-full min-h-[160px]">
+              <div class="w-16 h-16 rounded-full bg-teal-100 flex items-center justify-center text-teal-800 font-extrabold text-3xl mb-1.5">?</div>
+              <span class="text-sm sm:text-base font-extrabold text-teal-900">Missing Item</span>
+            </div>
+          </div>
+
+          <div class="space-y-2 pt-1">
+            <p class="text-sm font-semibold text-slate-500 text-left">Choose the missing photo:</p>
+            <div class="grid grid-cols-3 gap-2.5 sm:gap-3.5">
+              ${choices.map(key => `
+                <button onclick="handleRecallChoice('${key}')" class="recall-choice-btn p-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl text-xs sm:text-sm font-semibold transition-all flex flex-col items-center gap-1.5 border border-slate-200">
+                  <img src="${PHOTO_OBJECTS[key].img}" class="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-xl shadow-xs">
+                  <span>${PHOTO_OBJECTS[key].name}</span>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function handleRecallChoice(key) {
+      if (key === recallMissingKey) {
+        onGameVictory('Remember the Objects', 'memory', 96, 'rememberObjects');
+      } else {
+        speak('Not quite, look carefully and try again!');
+      }
+    }
+
+    // --- GAME 3: Arrange the Sequence with LARGER FONTS ---
+    // Level 1: 3 steps · Level 2: 4 steps · Level 3: 5 steps, drawn from varying routine sets
+    let sequenceStep = 1;
+    let sequenceOrder = [];
+
+    function setupSequenceGame() {
+      const container = document.getElementById('active-game-container');
+      sequenceStep = 1;
+
+      const level = getGameLevel('sequence');
+      const stepCount = level + 2; // 3, 4, 5
+
+      const chosenSet = SEQUENCE_SETS[Math.floor(Math.random() * SEQUENCE_SETS.length)];
+      sequenceOrder = chosenSet.slice(0, stepCount); // correct order 1..N
+      const displayOrder = shuffleArray(sequenceOrder.map((step, idx) => ({ ...step, correctStep: idx + 1 })));
+
+      container.innerHTML = `
+        <div class="space-y-3.5 text-left">
+          <p class="text-sm text-center font-medium text-slate-600 bg-slate-50 py-2 px-3 rounded-xl">Tap the ${stepCount} steps in order, from first to last:</p>
+          ${displayOrder.map((step, i) => `
+            <button id="step-${i}" onclick="handleSequenceClick(${step.correctStep}, this)" class="w-full p-4 rounded-2xl bg-slate-100 border-2 border-slate-200 hover:bg-slate-200 text-sm sm:text-base font-bold flex items-center justify-between transition-all">
+              <span class="flex items-center gap-2.5">${step.emoji} <span>${step.text}</span></span>
+              <span class="badge text-xs text-slate-400 font-medium">Step ?</span>
+            </button>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    function handleSequenceClick(stepNum, btn) {
+      if (stepNum === sequenceStep) {
+        btn.classList.remove('bg-slate-100', 'hover:bg-slate-200', 'border-slate-200');
+        btn.classList.add('bg-teal-100', 'border-teal-500', 'text-teal-950');
+        btn.querySelector('.badge').textContent = `Step ${sequenceStep} ✓`;
+        btn.querySelector('.badge').className = 'badge text-xs font-extrabold text-teal-800 bg-white py-1 px-2.5 rounded-lg border border-teal-300';
+        btn.disabled = true;
+        sequenceStep++;
+
+        speak(`Step ${stepNum} correct!`);
+
+        if (sequenceStep > sequenceOrder.length) {
+          setTimeout(() => onGameVictory('Arrange the Sequence', 'reasoning', 95, 'sequence'), 500);
+        }
+      } else {
+        speak('Think about what comes next in the routine.');
+      }
+    }
+
+    // --- On Victory: Record Progress, Gently Advance Difficulty & Animate UI ---
+    function onGameVictory(gameName, category, score, gameKey) {
+      const updatedState = recordCompletedActivity(gameName, category, score);
+
+      let newLevel = null;
+      if (gameKey) {
+        newLevel = advanceGameLevel(gameKey);
+        renderGameLevelBadges();
+      }
+
+      document.getElementById('active-game-container').innerHTML = '';
+      const victoryBanner = document.getElementById('victory-banner');
+      const footerBtns = document.getElementById('modal-footer-btns');
+      document.getElementById('victory-score').textContent = score + '%';
+
+      victoryBanner.classList.remove('hidden');
+      footerBtns.classList.add('hidden');
+
+      const levelNote = newLevel ? ` Next round will be at level ${newLevel}.` : '';
+      speak(`Congratulations! Activity completed with ${score}% accuracy. Your progress has been updated!${levelNote}`);
+    }
+  </script>
+</body>
+</html>
