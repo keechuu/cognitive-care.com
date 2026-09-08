@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cognitive Care - Profile</title>
+  <!-- Google Fonts: Merriweather for serif headings, Plus Jakarta Sans for UI -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Merriweather', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              navy: '#062146',
+              navyHover: '#0A2D5C',
+              mint: '#80EEDF',
+              mintHover: '#6DE2D2',
+              mintDark: '#094F48',
+              canvas: '#FAF9F6',
+              sidebar: '#F8F9FA',
+              cardBg: '#FFFFFF',
+              borderLight: '#ECEEF1',
+              danger: '#BE123C',
+              dangerHover: '#9F1239',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+/* Custom Styling for Cognitive Care Portal */
+
+/* Active Sidebar Navigation Item */
+.nav-item.active {
+  background-color: #062146 !important;
+  color: #ffffff !important;
+}
+
+.nav-item.active i {
+  stroke: #ffffff !important;
+}
+
+/* Input Box Focus and Styling */
+.input-box {
+  background-color: #F1F3F5;
+  border: 1.5px solid transparent;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.input-box:focus-within {
+  background-color: #ffffff;
+  border-color: #80EEDF;
+  box-shadow: 0 0 0 4px rgba(128, 238, 223, 0.25);
+}
+
+/* Card Elevation Shadow */
+.login-card {
+  box-shadow: 0 25px 50px -12px rgba(6, 33, 70, 0.09), 0 4px 20px -2px rgba(0, 0, 0, 0.04);
+}
+
+/* Audio guidance speakable hover indicators */
+.audio-speakable {
+  transition: color 0.15s ease;
+  user-select: none;
+}
+
+.audio-speakable:hover {
+  color: #094F48;
+}
+
+.audio-speaking {
+  animation: speak-pulse 1.2s infinite ease-in-out;
+  color: #094F48 !important;
+}
+
+@keyframes speak-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.02);
+    opacity: 0.8;
+  }
+}
+
+/* Custom Scrollbar for responsiveness */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #E2E8F0;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #CBD5E1;
+}
+</style>
+</head>
+<body class="font-sans bg-brand-canvas text-slate-800 antialiased h-screen overflow-hidden flex">
+
+  <!-- Mobile Sidebar Overlay Backdrop -->
+  <div id="sidebar-backdrop" class="fixed inset-0 bg-slate-900/30 backdrop-blur-sm z-30 hidden lg:hidden"></div>
+
+  <!-- Left Navigation Sidebar -->
+  <aside id="sidebar" class="w-64 bg-brand-sidebar border-r border-brand-borderLight flex flex-col justify-between p-6 z-40 fixed lg:static inset-y-0 -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
+    <div>
+      <!-- Brand Logo / Title -->
+      <div class="flex items-center justify-between pb-8">
+        <a href="home.html" class="flex items-center gap-3 font-serif font-bold text-slate-900 tracking-tight cursor-pointer min-w-0">
+          <img src="assets/cognitive-care-logo.png" alt="Cognitive Care" class="w-11 h-11 rounded-xl object-cover bg-black shadow-sm shrink-0">
+          <span class="leading-tight">Cognitive Care</span>
+        </a>
+        <button id="close-sidebar-btn" class="lg:hidden text-slate-400 hover:text-slate-600 p-1" aria-label="Close sidebar">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Navigation Menu Items -->
+      <nav class="space-y-1.5" aria-label="Main Navigation">
+        <a href="home.html" class="nav-item flex items-center gap-3.5 px-4 py-3 rounded-xl font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 transition-all" data-nav="Home">
+          <i data-lucide="layout-grid" class="w-5 h-5"></i>
+          <span>Home</span>
+        </a>
+
+        <a href="games.html" class="nav-item flex items-center gap-3.5 px-4 py-3 rounded-xl font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 transition-all" data-nav="Games">
+          <i data-lucide="gamepad-2" class="w-5 h-5 stroke-[1.75]"></i>
+          <span>Games</span>
+        </a>
+
+        <a href="album.html" class="nav-item flex items-center gap-3.5 px-4 py-3 rounded-xl font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 transition-all" data-nav="Memory Album">
+          <i data-lucide="images" class="w-5 h-5 stroke-[1.75]"></i>
+          <span>Memory Album</span>
+        </a>
+
+        <a href="reminders.html" class="nav-item flex items-center gap-3.5 px-4 py-3 rounded-xl font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 transition-all" data-nav="Reminders">
+          <i data-lucide="bell-ring" class="w-5 h-5 stroke-[1.75]"></i>
+          <span>Reminders</span>
+        </a>
+      <a href="progress.html" class="nav-item flex items-center gap-3.5 px-4 py-3 rounded-xl font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 transition-all" data-nav="Progress">
+          <i data-lucide="trending-up" class="w-5 h-5 stroke-[1.75]"></i>
+          <span>Progress</span>
+        </a>
+
+        <a href="profile.html" class="nav-item active flex items-center gap-3.5 px-4 py-3 rounded-xl font-medium transition-all" data-nav="Profile">
+          <i data-lucide="circle-user-round" class="w-5 h-5 stroke-[1.75]"></i>
+          <span>Profile</span>
+        </a>
+
+        <a href="settings.html" class="nav-item flex items-center gap-3.5 px-4 py-3 rounded-xl font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 transition-all" data-nav="Settings">
+          <i data-lucide="settings" class="w-5 h-5 stroke-[1.75]"></i>
+          <span>Settings</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Sidebar footer note -->
+    <div class="text-xs text-slate-400 text-center pt-4 border-t border-slate-200/60">
+      v1.0 • Care Platform
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="flex-1 flex flex-col h-screen overflow-y-auto bg-brand-canvas pb-12">
+    
+    <!-- Top Bar -->
+    <header class="w-full flex items-center justify-between gap-4 px-6 sm:px-10 py-5 bg-brand-canvas sticky top-0 z-20">
+      <div class="flex items-center gap-3">
+        <button id="open-sidebar-btn" class="lg:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100" aria-label="Open menu">
+          <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+      </div>
+      <div class="flex items-center gap-3 sm:gap-4">
+      <div class="flex items-center gap-2 sm:gap-3 bg-white border border-slate-200/80 px-3 sm:px-4 py-2 rounded-2xl shadow-xs text-slate-700 shrink-0" aria-label="Current date and time">
+        <div class="flex items-center gap-2 text-xs font-semibold text-slate-500">
+          <i data-lucide="calendar-days" class="w-4 h-4"></i>
+          <span id="current-day">Tuesday</span>
+        </div>
+        <span class="text-slate-300">•</span>
+        <div class="flex items-center gap-2 text-sm font-bold">
+          <span id="current-date">September 8, 2026</span>
+        </div>
+        <span class="text-slate-300">•</span>
+        <div class="flex items-center gap-2 text-sm font-black text-brand-navy">
+          <i data-lucide="clock-3" class="w-4 h-4"></i>
+          <span id="current-time">3:15 PM</span>
+        </div>
+      </div>
+      </div>
+    
+      <div class="relative shrink-0" data-profile-menu>
+        <button type="button" class="profile-menu-btn w-10 h-10 rounded-2xl bg-white border border-slate-200/80 shadow-xs flex items-center justify-center text-slate-700 hover:bg-slate-50 transition-all" aria-haspopup="true" aria-expanded="false" aria-label="Account menu">
+          <i data-lucide="circle-user-round" class="w-5 h-5"></i>
+        </button>
+        <div class="profile-menu hidden absolute right-0 mt-2 w-52 bg-white border border-slate-200 rounded-2xl shadow-xl p-2 z-50">
+          <div class="px-3 py-2 border-b border-slate-100 mb-1">
+            <div class="text-[11px] text-slate-400">Account</div>
+            <div class="profile-menu-email text-xs font-semibold text-slate-800 truncate">Not signed in</div>
+          </div>
+          <a href="profile.html" class="profile-action profile-view flex items-center gap-2 w-full px-3 py-2.5 rounded-xl text-sm text-slate-700 hover:bg-slate-50">
+            <i data-lucide="user" class="w-4 h-4"></i><span>Profile</span>
+          </a>
+          <button type="button" class="profile-action profile-login hidden flex items-center gap-2 w-full px-3 py-2.5 rounded-xl text-sm text-slate-700 hover:bg-slate-50 text-left">
+            <i data-lucide="log-in" class="w-4 h-4"></i><span>Log in</span>
+          </button>
+          <button type="button" class="profile-action profile-logout hidden flex items-center gap-2 w-full px-3 py-2.5 rounded-xl text-sm text-rose-700 hover:bg-rose-50 text-left">
+            <i data-lucide="log-out" class="w-4 h-4"></i><span>Log out</span>
+          </button>
+        </div>
+      </div>
+    </header>
+    <!-- Profile Content Container -->
+    <div class="px-6 sm:px-10 max-w-7xl mx-auto w-full space-y-6 pb-10">
+
+      <!-- Page Heading -->
+      <div>
+        <p class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Account</p>
+        <h2 class="font-serif text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">My Profile</h2>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+
+        <!-- Left: Avatar + Identity Card -->
+        <div class="bg-white rounded-3xl p-6 sm:p-7 border border-slate-100 shadow-sm flex flex-col items-center text-center">
+          <div id="profile-photo-box" class="w-24 h-24 rounded-full bg-slate-100 border-2 border-dashed border-slate-300 flex flex-col items-center justify-center text-slate-400 hover:text-slate-600 cursor-pointer shadow-xs overflow-hidden mb-4" title="Click to add or change your photo">
+            <i data-lucide="camera" class="w-6 h-6 text-slate-400 mb-1"></i>
+            <span class="text-[10px] font-medium text-slate-500">Add Photo</span>
+          </div>
+          <input type="file" id="profile-photo-input" accept="image/*" class="hidden">
+
+          <h3 id="profile-name-display" class="font-serif font-bold text-xl text-slate-900">Alex Morgan</h3>
+          <p id="profile-email-display" class="text-sm text-slate-500 mt-0.5">alex.morgan@example.com</p>
+
+          <div class="w-full border-t border-slate-100 my-5"></div>
+
+          <div class="w-full flex items-center justify-between text-sm py-2">
+            <span class="text-slate-500">Current Mode</span>
+            <span id="profile-mode-display" class="font-semibold text-slate-900">Patient</span>
+          </div>
+          <div class="w-full flex items-center justify-between text-sm py-2">
+            <span class="text-slate-500">Weekly Streak</span>
+            <span id="profile-streak-display" class="font-semibold text-slate-900">0 Days</span>
+          </div>
+          <div class="w-full flex items-center justify-between text-sm py-2">
+            <span class="text-slate-500">Activities Completed</span>
+            <span id="profile-activities-display" class="font-semibold text-slate-900">0</span>
+          </div>
+        </div>
+
+        <!-- Right: Editable Details -->
+        <div class="lg:col-span-2 bg-white rounded-3xl p-6 sm:p-7 border border-slate-100 shadow-sm space-y-5">
+          <div class="flex items-center gap-3 pb-1">
+            <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-700 flex items-center justify-center shrink-0">
+              <i data-lucide="id-card" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h3 class="font-serif font-bold text-lg text-slate-900">Personal Information</h3>
+              <p class="text-xs text-slate-500">Keep your details up to date.</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1.5">Full Name</label>
+              <input id="profile-name-input" type="text" placeholder="Alex Morgan" class="w-full bg-slate-100 rounded-xl px-4 py-3 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-mint">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1.5">Email Address</label>
+              <input id="profile-email-input" type="email" placeholder="alex.morgan@example.com" class="w-full bg-slate-100 rounded-xl px-4 py-3 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-mint">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1.5">Phone Number</label>
+              <input id="profile-phone-input" type="tel" placeholder="(555) 123-4567" class="w-full bg-slate-100 rounded-xl px-4 py-3 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-mint">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1.5">Date of Birth</label>
+              <input id="profile-dob-input" type="date" class="w-full bg-slate-100 rounded-xl px-4 py-3 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-mint">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-2">My Interests</label>
+            <p class="text-xs text-slate-500 mb-3">Choose interests to personalize your Care Circle matches.</p>
+            <div id="profile-interests" class="flex flex-wrap gap-2">
+              <button type="button" data-interest="Gardening" class="interest-chip px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 text-xs font-semibold text-slate-600 hover:border-violet-300 hover:bg-violet-50">🌱 Gardening</button>
+              <button type="button" data-interest="Music" class="interest-chip px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 text-xs font-semibold text-slate-600 hover:border-violet-300 hover:bg-violet-50">🎵 Music</button>
+              <button type="button" data-interest="Books" class="interest-chip px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 text-xs font-semibold text-slate-600 hover:border-violet-300 hover:bg-violet-50">📚 Books</button>
+              <button type="button" data-interest="Puzzles" class="interest-chip px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 text-xs font-semibold text-slate-600 hover:border-violet-300 hover:bg-violet-50">🧩 Puzzles</button>
+              <button type="button" data-interest="Art" class="interest-chip px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 text-xs font-semibold text-slate-600 hover:border-violet-300 hover:bg-violet-50">🎨 Art</button>
+              <button type="button" data-interest="Walking" class="interest-chip px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 text-xs font-semibold text-slate-600 hover:border-violet-300 hover:bg-violet-50">🚶 Walking</button>
+              <button type="button" data-interest="Cooking" class="interest-chip px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 text-xs font-semibold text-slate-600 hover:border-violet-300 hover:bg-violet-50">🍳 Cooking</button>
+              <button type="button" data-interest="Chess" class="interest-chip px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 text-xs font-semibold text-slate-600 hover:border-violet-300 hover:bg-violet-50">♟️ Chess</button>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1.5">Notes for Caregivers</label>
+            <textarea id="profile-notes-input" rows="3" placeholder="e.g. Prefers morning games, hard of hearing in left ear..." class="w-full bg-slate-100 rounded-xl px-4 py-3 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-mint resize-none"></textarea>
+          </div>
+
+          <p id="profile-save-confirmation" class="hidden text-sm text-emerald-700 font-medium flex items-center gap-1.5">
+            <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+            Profile updated successfully.
+          </p>
+
+          <div class="flex justify-end pt-1">
+            <button id="profile-save-btn" type="button" class="bg-brand-navy hover:bg-brand-navyHover text-white px-6 py-3 rounded-xl font-medium text-sm flex items-center gap-2 transition-all shadow-md active:scale-[0.99]">
+              <span>Save Changes</span>
+              <i data-lucide="check" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+(function(){
+  const KEY='cognitive_care_profile';
+  function load(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return {}}}
+  function save(p){localStorage.setItem(KEY,JSON.stringify(p))}
+  document.addEventListener('DOMContentLoaded',()=>{
+    const p=load(); const interests=p.interests||[];
+    document.querySelectorAll('.interest-chip').forEach(btn=>{
+      const on=interests.includes(btn.dataset.interest);
+      btn.classList.toggle('bg-violet-100',on); btn.classList.toggle('border-violet-300',on); btn.classList.toggle('text-violet-800',on);
+      btn.addEventListener('click',()=>{
+        const now=load(); const arr=now.interests||[]; const i=arr.indexOf(btn.dataset.interest);
+        if(i>=0) arr.splice(i,1); else arr.push(btn.dataset.interest); now.interests=arr; save(now);
+        btn.classList.toggle('bg-violet-100'); btn.classList.toggle('border-violet-300'); btn.classList.toggle('text-violet-800');
+      });
+    });
+  });
+})();
+</script>
+<script src="app.js?v=20260908"></script>
+  <script src="deploy-fixes.js?v=20260908"></script>
+<script>
+(function(){
+  function initProfileMenus(){
+    document.querySelectorAll('[data-profile-menu]').forEach(function(root){
+      var btn=root.querySelector('.profile-menu-btn');
+      var menu=root.querySelector('.profile-menu');
+      if(!btn||!menu||btn.dataset.inlineProfileBound==='1') return;
+      btn.dataset.inlineProfileBound='1';
+      function isOpen(){ return !menu.classList.contains('hidden') && menu.style.display !== 'none'; }
+      function close(){ menu.classList.add('hidden'); menu.style.display='none'; btn.setAttribute('aria-expanded','false'); }
+      function open(){ menu.classList.remove('hidden'); menu.style.display='block'; menu.style.position='absolute'; menu.style.right='0'; menu.style.top='calc(100% + 8px)'; btn.setAttribute('aria-expanded','true'); }
+      function sync(){
+        var logged=sessionStorage.getItem('cognitive_care_logged_in')==='true';
+        var email='Not signed in';
+        try{ var a=JSON.parse(localStorage.getItem('cognitive_care_caregiver_account')||'null'); if(logged && a && a.email) email=a.email; }catch(e){}
+        var emailEl=root.querySelector('.profile-menu-email'); if(emailEl) emailEl.textContent=email;
+        var login=root.querySelector('.profile-login'); if(login) login.classList.toggle('hidden', logged);
+        var logout=root.querySelector('.profile-logout'); if(logout) logout.classList.toggle('hidden', !logged);
+      }
+      btn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation(); sync(); isOpen()?close():open();});
+      var login=root.querySelector('.profile-login');
+      if(login) login.addEventListener('click',function(e){e.preventDefault(); window.location.href='login.html';});
+      var logout=root.querySelector('.profile-logout');
+      if(logout) logout.addEventListener('click',function(e){e.preventDefault(); sessionStorage.removeItem('cognitive_care_logged_in'); localStorage.removeItem('cognitive_care_remembered_login'); window.location.href='login.html';});
+      sync(); close();
+    });
+  }
+  document.addEventListener('click',function(e){
+    document.querySelectorAll('[data-profile-menu]').forEach(function(root){
+      var menu=root.querySelector('.profile-menu'); var btn=root.querySelector('.profile-menu-btn');
+      if(menu && !root.contains(e.target)){menu.classList.add('hidden'); menu.style.display='none'; if(btn) btn.setAttribute('aria-expanded','false');}
+    });
+  });
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',initProfileMenus); else initProfileMenus();
+  window.addEventListener('pageshow',initProfileMenus);
+})();
+</script>
+</body>
+</html>
