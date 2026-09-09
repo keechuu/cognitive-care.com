@@ -1,0 +1,19 @@
+{
+  "name": "Cognitive Care",
+  "short_name": "Cognitive Care",
+  "description": "A supportive cognitive wellness companion for routines, reminders, memory, journal, games and progress.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#fbfbfa",
+  "theme_color": "#062146",
+  "icons": [
+    {
+      "src": "./assets/cognitive-care-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

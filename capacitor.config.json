@@ -1,0 +1,6 @@
+{
+  "appId": "com.cognitivecare.app",
+  "appName": "Cognitive Care",
+  "webDir": ".",
+  "bundledWebRuntime": false
+}
